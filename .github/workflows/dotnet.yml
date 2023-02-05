@@ -1,0 +1,63 @@
+name: .NET
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: |
+          dotnet restore
+      - name: Build
+        run: dotnet build --no-restore
+
+#      - name: Test
+#        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults"
+#
+#      - uses: dorny/test-reporter@v1
+#        if: always()
+#        with:
+#          name: .NET Test Results
+#          path: TestResults/*.trx
+#          reporter: dotnet-trx
+
+  publish:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, masOC-latest]
+    
+    runs-on: ${{matrix.os}}
+    name: publish-${{matrix.os}}
+    needs: build
+    if: ${{ github.event_name != 'pull_request' }} # don't upload artifacts for PRs
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 6.0.x
+      - name: Publish CLI
+        run: dotnet publish CiT.CLI\CiT.CLI.csproj -c Release
+      - name: Upload MVC artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: CiT.CLI
+          path: CiT.CLI\bin\Release\net6.0\publish\
