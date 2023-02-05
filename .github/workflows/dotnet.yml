@@ -40,7 +40,7 @@ jobs:
   publish:
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, masOC-latest]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
     
     runs-on: ${{matrix.os}}
     name: publish-${{matrix.os}}
