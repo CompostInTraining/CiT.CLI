@@ -1,4 +1,4 @@
-# CiT-CLI
+# CiT.CLI
 
 A CLI for administering the CompostInTraining.club Mastodon instance.
 
