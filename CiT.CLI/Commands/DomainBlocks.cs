@@ -71,9 +71,19 @@ public class DomainBlocks
     private void QueryCommand()
     {
         List<BlockedDomain> blockedDomains = ApiClient.GetInstanceBlockedDomains().Result;
-        blockedDomains = blockedDomains.OrderBy(bd => bd.Domain).ToList();
-        Console.WriteLine(blockedDomains.Any(bd => bd.Domain == _actionArgs[1])
-            ? $"Domain \"{_actionArgs[1]}\" found in blocklist."
-            : $"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        BlockedDomain? blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        if (blockedDomain is not null)
+        {
+            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
+            Console.WriteLine($"Domain: {blockedDomain.Domain}\n" +
+                              $"Created At: {blockedDomain.CreatedAt}\n" +
+                              $"Public Comment: {blockedDomain.PublicComment}\n" +
+                              $"Private Comment: {blockedDomain.PrivateComment}\n" +
+                              $"Severity: {blockedDomain.Severity}");
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
     }
 }
