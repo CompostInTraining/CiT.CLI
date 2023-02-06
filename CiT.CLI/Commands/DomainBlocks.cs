@@ -60,7 +60,7 @@ public class DomainBlocks
             "Domain", "Severity", "Comment");
         foreach (BlockedDomain bd in blockedDomains)
         {
-            string comment = bd.PublicComment;
+            string comment = bd.PublicComment ?? "";
             if (!string.IsNullOrEmpty(bd.PrivateComment))
             {
                 comment += $"// {bd.PrivateComment}";

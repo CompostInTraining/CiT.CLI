@@ -55,7 +55,7 @@ jobs:
         with:
           dotnet-version: 6.0.x
       - name: Publish CLI (${{matrix.rid}}
-        run: dotnet publish CiT.CLI/CiT.CLI.csproj -c Release -r ${{matrix.rid}}
+        run: dotnet publish CiT.CLI/CiT.CLI.csproj -c Release -r ${{matrix.rid}} --self-contained
       - name: Upload CLI artifact
         uses: actions/upload-artifact@v3
         with:
