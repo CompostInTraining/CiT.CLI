@@ -27,15 +27,15 @@ jobs:
       - name: Build
         run: dotnet build --no-restore
 
-#      - name: Test
-#        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults"
-#
-#      - uses: dorny/test-reporter@v1
-#        if: always()
-#        with:
-#          name: .NET Test Results
-#          path: TestResults/*.trx
-#          reporter: dotnet-trx
+      - name: Test
+        run: dotnet test --no-build --verbosity normal --logger "trx" --results-directory "./TestResults"
+
+      - uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: .NET Test Results
+          path: TestResults/*.trx
+          reporter: dotnet-trx
 
   publish:
     strategy:
