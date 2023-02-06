@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -27,19 +26,20 @@ public class ApiClient
     {
         List<BlockedDomain> rtnObj = new();
         HttpResponseMessage result = await Client.GetAsync($"{_domainBlocksApiUrl}?limit=200");
+        result.EnsureSuccessStatusCode();
         result.Headers.TryGetValues("Link", out var linkHeaders);
-        var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders.First());
+        var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders!.First());
         string responseContent = await result.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<List<BlockedDomain>>(responseContent)!;
         rtnObj.AddRange(obj);
-        while (linksFromHeaders.NextLink is not null)
+        while (!string.IsNullOrEmpty(linksFromHeaders.NextLink))
         {
             result = await Client.GetAsync(linksFromHeaders.NextLink);
             result.Headers.TryGetValues("Link", out linkHeaders);
-            linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders.First());
+            if (linkHeaders != null) linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders.First());
             responseContent = await result.Content.ReadAsStringAsync();
             obj = JsonConvert.DeserializeObject<List<BlockedDomain>>(responseContent);
-            rtnObj.AddRange(obj);
+            if (obj != null) rtnObj.AddRange(obj);
         }
         return rtnObj;
     }
