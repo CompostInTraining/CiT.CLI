@@ -16,4 +16,10 @@ public class BlockedDomain
     [JsonProperty("obfuscate")] public bool Obfuscate { get; set; }
     /// <inheritdoc />
     public override string ToString() => $"{Domain}";
+    public string DomainInfo =>
+        $"Domain: {Domain}\n" +
+        $"Created At: {CreatedAt}\n" +
+        $"Public Comment: {PublicComment}\n" +
+        $"Private Comment: {PrivateComment}\n" +
+        $"Severity: {Severity}";
 }

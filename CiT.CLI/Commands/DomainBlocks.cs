@@ -76,11 +76,7 @@ public class DomainBlocks
         if (blockedDomain is not null)
         {
             Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
-            Console.WriteLine($"Domain: {blockedDomain.Domain}\n" +
-                              $"Created At: {blockedDomain.CreatedAt}\n" +
-                              $"Public Comment: {blockedDomain.PublicComment}\n" +
-                              $"Private Comment: {blockedDomain.PrivateComment}\n" +
-                              $"Severity: {blockedDomain.Severity}");
+            Console.WriteLine(blockedDomain.DomainInfo);
         }
         else
         {
