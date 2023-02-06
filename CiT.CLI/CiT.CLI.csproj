@@ -8,6 +8,9 @@
         <Nullable>enable</Nullable>
         <AssemblyName>cit</AssemblyName>
         <RuntimeIdentifiers>osx-x64;linux-x64;win-x64</RuntimeIdentifiers>
+        <PublishSingleFile>true</PublishSingleFile>
+        <SelfContained>true</SelfContained>
+        <PublishReadyToRun>true</PublishReadyToRun>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -33,6 +36,9 @@
 
     <ItemGroup>
       <None Update="clisettings.json.example">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="clisettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
