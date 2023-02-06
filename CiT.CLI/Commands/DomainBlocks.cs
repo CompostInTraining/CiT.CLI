@@ -56,11 +56,16 @@ public class DomainBlocks
             Environment.Exit(1);
         }
         Console.WriteLine("{0,-30} {1,-7} {2,-10}",
-            "Domain", "Severity", "PrivateComment");
+            "Domain", "Severity", "Comment");
         foreach (BlockedDomain bd in blockedDomains)
         {
+            string comment = bd.PublicComment;
+            if (!string.IsNullOrEmpty(bd.PrivateComment))
+            {
+                comment += $"// {bd.PrivateComment}";
+            }
             Console.WriteLine("{0,-30} {1,-7} {2,-10}",
-                bd.Domain, bd.Severity, bd.PrivateComment);
+                bd.Domain, bd.Severity, comment);
         }
     }
     private void QueryCommand()
