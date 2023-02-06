@@ -1,4 +1,5 @@
 // https://gist.github.com/pimbrouwers/8f78e318ccfefff18f518a483997be29
+
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -10,29 +11,23 @@ public class LinkHeader
     public string PrevLink { get; set; }
     public string NextLink { get; set; }
     public string LastLink { get; set; }
-
     public static LinkHeader LinksFromHeader(string linkHeaderStr)
     {
         LinkHeader linkHeader = null;
-
         if (!string.IsNullOrWhiteSpace(linkHeaderStr))
         {
             string[] linkStrings = linkHeaderStr.Split(',');
-
             if (linkStrings != null && linkStrings.Any())
             {
                 linkHeader = new LinkHeader();
-
                 foreach (string linkString in linkStrings)
                 {
                     var relMatch = Regex.Match(linkString, "(?<=rel=\").+?(?=\")", RegexOptions.IgnoreCase);
                     var linkMatch = Regex.Match(linkString, "(?<=<).+?(?=>)", RegexOptions.IgnoreCase);
-
                     if (relMatch.Success && linkMatch.Success)
                     {
                         string rel = relMatch.Value.ToUpper();
                         string link = linkMatch.Value;
-
                         switch (rel)
                         {
                             case "FIRST":
@@ -52,7 +47,6 @@ public class LinkHeader
                 }
             }
         }
-
         return linkHeader;
     }
 }

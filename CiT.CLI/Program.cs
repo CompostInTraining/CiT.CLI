@@ -18,9 +18,12 @@ internal static class Program
     public static void Main(string[] args)
     {
         #region Init Config
+
         InstanceConfiguration? instanceConfig = Configuration.GetSection("Instance").Get<InstanceConfiguration>();
-        IConfigManager configManager = new ConfigManager(Configuration, instanceConfig ?? throw new InvalidOperationException());
+        IConfigManager configManager =
+            new ConfigManager(Configuration, instanceConfig ?? throw new InvalidOperationException());
         var apiClient = new ApiClient(configManager);
+
         #endregion
 
         bool debug;
@@ -32,7 +35,6 @@ internal static class Program
         {
             debug = false;
         }
-
         if (debug)
         {
             Console.WriteLine($"Total arguments: {args.Length}");

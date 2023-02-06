@@ -10,7 +10,6 @@ public interface IConfigManager
     InstanceConfiguration Instance { get; set; }
     string GetConfigValue(string key);
 }
-
 public class ConfigManager : IConfigManager
 {
     public IConfiguration Configuration { get; set; }
