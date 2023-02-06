@@ -56,7 +56,8 @@ public class DomainBlocks
             Console.WriteLine(ex.Message);
             Environment.Exit(1);
         }
-        Console.WriteLine("{0,-30} {1,-7} {2,-10}",
+        var strFormat = "{0,-30} {1,-7} {2,-10}";
+        Console.WriteLine(strFormat,
             "Domain", "Severity", "Comment");
         foreach (BlockedDomain bd in blockedDomains)
         {
@@ -65,7 +66,7 @@ public class DomainBlocks
             {
                 comment += $"// {bd.PrivateComment}";
             }
-            Console.WriteLine("{0,-30} {1,-7} {2,-10}",
+            Console.WriteLine(strFormat,
                 bd.Domain, bd.Severity, comment);
         }
     }
