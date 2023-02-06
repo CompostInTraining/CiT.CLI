@@ -1,6 +1,10 @@
 // https://gist.github.com/pimbrouwers/8f78e318ccfefff18f518a483997be29
 // ReSharper disable All
 
+#pragma warning disable CS8600
+#pragma warning disable CS8618
+#pragma warning disable CS8603
+
 using System.Linq;
 using System.Text.RegularExpressions;
 
