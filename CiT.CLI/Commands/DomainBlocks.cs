@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
 using CiT.Core.Entities;
 using CiT.Core.Mastodon;
-using Newtonsoft.Json.Linq;
 
 namespace CiT.CLI.Commands;
 
@@ -23,42 +20,55 @@ public class DomainBlocks
         switch (_actionArgs[0])
         {
             case "show":
-                dynamic blockedDomains = ApiClient.GetInstanceBlockedDomains().Result;
-                foreach (JObject item in blockedDomains)
-                {
-                    var domain = item.GetValue("domain")!.ToString();
-                    var severity = item.GetValue("severity")?.ToString();
-                    var comment = item.GetValue("comment")?.ToString();
-                    Console.WriteLine("{0,-30} {1,-7} {2,-10}",
-                        domain, severity, comment);
-                }
+                ShowCommand();
                 break;
             case "query":
-                List<BlockedDomain> blocked_domains = ApiClient.GetInstanceBlockedDomains().Result;
-                blocked_domains = blocked_domains.OrderBy(bd => bd.Domain).ToList();
-                Console.WriteLine(blocked_domains.Any(bd => bd.Domain == _actionArgs[1])
-                    ? $"Domain \"{_actionArgs[1]}\" found in blocklist."
-                    : $"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+                QueryCommand();
                 break;
             case "add":
-                dynamic? actionResult = null;
-                string[] actionArgs = _actionArgs.Skip(1).ToArray();
-                switch (actionArgs.Length)
-                {
-                    case 1:
-                        actionResult = ApiClient.AddDomainBlock(actionArgs[0]);
-                        break;
-                    case 2:
-                        actionResult = ApiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1]);
-                        break;
-                    case 3:
-                        actionResult = ApiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1], comment: actionArgs[2]);
-                        break;
-                }
-                (int statusCode, string response) result = actionResult!.Result;
-                Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
-                
+                AddCommand();
                 break;
         }
+    }
+    private void AddCommand()
+    {
+        string[] actionArgs = _actionArgs.Skip(1).ToArray();
+        dynamic actionResult = actionArgs.Length switch
+        {
+            1 => ApiClient.AddDomainBlock(actionArgs[0]),
+            2 => ApiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1]),
+            3 => ApiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1], comment: actionArgs[2]),
+            _ => throw new InvalidOperationException()
+        };
+        (int statusCode, string response) result = actionResult.Result;
+        Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
+    }
+    private static void ShowCommand()
+    {
+        List<BlockedDomain>? blockedDomains = null;
+        try
+        {
+            blockedDomains = ApiClient.GetInstanceBlockedDomains().Result;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            Environment.Exit(1);
+        }
+        Console.WriteLine("{0,-30} {1,-7} {2,-10}",
+            "Domain", "Severity", "PrivateComment");
+        foreach (BlockedDomain bd in blockedDomains)
+        {
+            Console.WriteLine("{0,-30} {1,-7} {2,-10}",
+                bd.Domain, bd.Severity, bd.PrivateComment);
+        }
+    }
+    private void QueryCommand()
+    {
+        List<BlockedDomain> blockedDomains = ApiClient.GetInstanceBlockedDomains().Result;
+        blockedDomains = blockedDomains.OrderBy(bd => bd.Domain).ToList();
+        Console.WriteLine(blockedDomains.Any(bd => bd.Domain == _actionArgs[1])
+            ? $"Domain \"{_actionArgs[1]}\" found in blocklist."
+            : $"Domain \"{_actionArgs[1]}\" not found in blocklist.");
     }
 }
