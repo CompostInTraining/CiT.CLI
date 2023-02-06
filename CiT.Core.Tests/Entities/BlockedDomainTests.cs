@@ -13,7 +13,7 @@ public class BlockedDomainTests
         BlockedDomain blockedDomain = new();
 
         // Assert
-        Assert.AreEqual(9, blockedDomain.PropertyCount());
+        Assert.AreEqual(10, blockedDomain.PropertyCount());
         Assert.IsTrue(blockedDomain.HasProperty("Id"));
         Assert.IsTrue(blockedDomain.HasProperty("Domain"));
         Assert.IsTrue(blockedDomain.HasProperty("CreatedAt"));
@@ -23,6 +23,7 @@ public class BlockedDomainTests
         Assert.IsTrue(blockedDomain.HasProperty("PrivateComment"));
         Assert.IsTrue(blockedDomain.HasProperty("PublicComment"));
         Assert.IsTrue(blockedDomain.HasProperty("Obfuscate"));
+        Assert.IsTrue(blockedDomain.HasProperty("DomainInfo"));
     }
     [TestMethod]
     public void BlockedDomain_NotNull() {
