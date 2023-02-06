@@ -1,4 +1,5 @@
 // https://gist.github.com/pimbrouwers/8f78e318ccfefff18f518a483997be29
+// ReSharper disable All
 
 using System.Linq;
 using System.Text.RegularExpressions;

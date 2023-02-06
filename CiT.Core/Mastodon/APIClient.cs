@@ -45,6 +45,7 @@ public class ApiClient
     }
     public static async Task<dynamic> AddDomainBlock(string domain, string? severity = null, string? comment = null)
     {
+        // ReSharper disable once UseObjectOrCollectionInitializer
         Dictionary<string, string> payload = new();
         payload["domain"] = domain;
         if (severity is not null)

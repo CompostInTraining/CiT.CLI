@@ -9,6 +9,7 @@ namespace CiT.CLI.Commands;
 public class DomainBlocks
 {
     private readonly string[] _actionArgs;
+    // ReSharper disable once NotAccessedField.Local
     private readonly ApiClient _apiClient;
     public DomainBlocks(string[] actionArgs, ApiClient apiClient)
     {
