@@ -56,7 +56,8 @@ public class DomainBlocks
             Console.WriteLine(ex.Message);
             Environment.Exit(1);
         }
-        var strFormat = "{0,-30} {1,-7} {2,-10}";
+        var longestDomain = blockedDomains.OrderByDescending(bd => bd.Domain.Length).First().Domain;
+        var strFormat = "{0,-" + longestDomain.Length + "} {1,-7} {2,-10}";
         Console.WriteLine(strFormat,
             "Domain", "Severity", "Comment");
         foreach (BlockedDomain bd in blockedDomains)
