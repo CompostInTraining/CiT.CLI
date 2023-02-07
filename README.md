@@ -22,7 +22,7 @@ cit domain-blocks <command> [<Arg>...]
 * `query <domain>` - query the blocklist for a given domain
 * `add <domain> [<severity> <comment>]` - add a domain to the blocklist,
   optionally specifying the severity and providing a comment.
-    * `<severity>` should be one of 'suspend', 'silence', or 'noop' per
+    * `<severity>` should be one of `suspend`, `silence`, or `noop` per
       the [Mastodon docs](https://docs.joinmastodon.org/methods/admin/domain_blocks/#form-data-parameters)
 
 #### email-domain-blocks
