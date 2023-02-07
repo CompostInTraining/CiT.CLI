@@ -60,6 +60,7 @@ public class DomainBlocks
         var strFormat = "{0,-" + longestDomain.Length + "} {1,-7} {2,-10}";
         Console.WriteLine(strFormat,
             "Domain", "Severity", "Comment");
+        Console.WriteLine(new string('-', longestDomain.Length + 7 + 10));
         foreach (BlockedDomain bd in blockedDomains)
         {
             string comment = bd.PublicComment ?? "";
