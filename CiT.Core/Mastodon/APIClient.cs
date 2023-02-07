@@ -4,7 +4,7 @@ using CiT.Core.Configuration;
 
 namespace CiT.Core.Mastodon;
 
-public class ApiClient
+public abstract class ApiClient
 {
     protected static readonly HttpClient Client = new();
     protected ApiClient(IConfigManager configManager)
