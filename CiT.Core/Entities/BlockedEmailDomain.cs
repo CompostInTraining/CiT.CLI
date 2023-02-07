@@ -4,11 +4,9 @@ using Newtonsoft.Json;
 
 namespace CiT.Core.Entities;
 
-public class BlockedEmailDomain
+public class BlockedEmailDomain : BlockObjectBase
 {
-    [JsonProperty("id")] public string? Id { get; set; }
     [JsonProperty("domain")] public string? Domain { get; set; }
-    [JsonProperty("created_at")] public DateTime CreatedAt { get; set; }
     [JsonProperty("history")] public List<BlockedEmailDomainHistory>? History { get; set; }
     /// <inheritdoc />
     public override string ToString() => $"{Domain}";

@@ -3,11 +3,9 @@ using Newtonsoft.Json;
 
 namespace CiT.Core.Entities;
 
-public class BlockedDomain
+public class BlockedDomain : BlockObjectBase
 {
-    [JsonProperty("id")] public string? Id { get; set; }
     [JsonProperty("domain")] public string? Domain { get; set; }
-    [JsonProperty("created_at")] public DateTime CreatedAt { get; set; }
     [JsonProperty("severity")] public string? Severity { get; set; }
     [JsonProperty("reject_media")] public bool RejectMedia { get; set; }
     [JsonProperty("reject_reports")] public bool RejectReports { get; set; }
