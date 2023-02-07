@@ -37,3 +37,18 @@ cit email-domain-blocks <command> [<Arg>...]
 * `query <domain>` - query the blocklist for a given domain
 * `add <domain>` - add an email domain to the blocklist
 * `remove <domain>` - remove an email domain from the blocklist
+
+#### ip-blocks
+
+```shell
+cit ip-blocks <command> [<Arg>...]
+```
+
+`ip-blocks` commands:
+
+* `show` - list all ip rules
+* `query <address>` - query the ruleset for a given address
+* `add <address> <severity>` - add an ip address to the ruleset
+  * `<severity>` should be one of `sign_up_requires_approval`, `sign_up_block`, or `no_access` per
+    the [Mastodon docs](https://docs.joinmastodon.org/methods/admin/ip_blocks/#form-data-parameters)
+* `remove <address>` - remove an ip address from the ruleset

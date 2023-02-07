@@ -58,6 +58,9 @@ internal static class Program
             case "email-domain-blocks":
                 new EmailDomainBlocks(actionArgs, configManager).Process();
                 break;
+            case "ip-blocks":
+                new IpAddressBlocks(actionArgs, configManager).Process();
+                break;
             default:
                 Console.WriteLine("Unknown command");
                 break;
