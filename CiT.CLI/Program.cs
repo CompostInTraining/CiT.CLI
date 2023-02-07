@@ -4,7 +4,6 @@ using System.Linq;
 using CiT.CLI.Commands;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
-using CiT.Core.Mastodon;
 using Microsoft.Extensions.Configuration;
 
 namespace CiT.CLI;
@@ -22,7 +21,6 @@ internal static class Program
         InstanceConfiguration? instanceConfig = Configuration.GetSection("Instance").Get<InstanceConfiguration>();
         IConfigManager configManager =
             new ConfigManager(Configuration, instanceConfig ?? throw new InvalidOperationException());
-        var apiClient = new ApiClient(configManager);
 
         #endregion
 
@@ -55,7 +53,7 @@ internal static class Program
         switch (args[0])
         {
             case "domain-blocks":
-                new DomainBlocks(actionArgs, apiClient).Process();
+                new DomainBlocks(actionArgs, configManager).Process();
                 break;
             default:
                 Console.WriteLine("Unknown command");
