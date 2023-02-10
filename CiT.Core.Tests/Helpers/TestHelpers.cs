@@ -6,7 +6,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 #pragma warning disable CS8604
 #pragma warning disable CS8600
 #pragma warning disable CS8602
-namespace CiT.Core.Tests.TestHelpers
+namespace CiT.Core.Tests.Helpers
 {
     public static class EntityTests
     {

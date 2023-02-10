@@ -1,5 +1,5 @@
 using CiT.Core.Entities;
-using CiT.Core.Tests.TestHelpers;
+using CiT.Core.Tests.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CiT.Core.Tests.Entities;
