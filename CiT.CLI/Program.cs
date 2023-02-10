@@ -12,6 +12,7 @@ internal static class Program
 {
     private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
         .AddJsonFile("clisettings.json", false, true)
+        .AddJsonFile($"clisettings.{Environment.GetEnvironmentVariable("CIT_CLI_ENV")}.json", true, true)
         .AddEnvironmentVariables()
         .Build();
     public static void Main(string[] args)
