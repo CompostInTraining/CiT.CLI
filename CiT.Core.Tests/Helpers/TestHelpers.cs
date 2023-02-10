@@ -115,10 +115,10 @@ public static class RandomString
     {
         const string src = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         var sb = new StringBuilder();
-        Random RNG = new Random();
+        var rng = new Random();
         for (var i = 0; i < length; i++)
         {
-            var c = src[RNG.Next(0, src.Length)];
+            var c = src[rng.Next(0, src.Length)];
             sb.Append(c);
         }
         return sb.ToString();

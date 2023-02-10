@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
@@ -64,7 +65,7 @@ public class IpAddressBlocks
         string longestAddress = blockedIpAddresses.OrderByDescending(ip => ip.Address!.Length).First().Address!;
         string longestSeverity = blockedIpAddresses.OrderByDescending(ip => ip.Severity!.Length).First().Severity!;
         string longestCreatedAt =
-            blockedIpAddresses.OrderByDescending(ip => ip.CreatedAt.ToString().Length).First().CreatedAt.ToString();
+            blockedIpAddresses.OrderByDescending(ip => ip.CreatedAt.ToString(CultureInfo.InvariantCulture).Length).First().CreatedAt.ToString(CultureInfo.InvariantCulture);
         string strFormat = "{0,-" + longestAddress.Length + "} {1,-" + longestSeverity.Length + "} {2,-" +
                            longestCreatedAt.Length + "}";
         Console.WriteLine(strFormat,
