@@ -22,12 +22,12 @@ public class DomainBlocksApi : ApiClient
         List<BlockedDomain> rtnObj = new();
         HttpResponseMessage result = await Client.GetAsync($"{_domainBlocksApiUrl}?limit=200");
         result.EnsureSuccessStatusCode();
-        result.Headers.TryGetValues("Link", out var linkHeaders);
-        var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders!.First());
+        bool linkHeadersFound = result.Headers.TryGetValues("Link", out var linkHeaders);
+        var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders?.First() ?? "");
         string responseContent = await result.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<List<BlockedDomain>>(responseContent)!;
         rtnObj.AddRange(obj);
-        while (!string.IsNullOrEmpty(linksFromHeaders.NextLink))
+        while (linkHeadersFound && !string.IsNullOrEmpty(linksFromHeaders.NextLink))
         {
             result = await Client.GetAsync(linksFromHeaders.NextLink);
             result.Headers.TryGetValues("Link", out linkHeaders);
