@@ -57,6 +57,11 @@ public class DomainBlocks
             Console.WriteLine(ex.Message);
             Environment.Exit(1);
         }
+        if (blockedDomains.Count == 0)
+        {
+            Console.WriteLine("No domain blocks found.");
+            return;
+        }
         string? longestDomain = blockedDomains.OrderByDescending(bd => bd.Domain!.Length).First().Domain;
         string strFormat = "{0,-" + longestDomain!.Length + "} {1,-7} {2,-10}";
         Console.WriteLine(strFormat,

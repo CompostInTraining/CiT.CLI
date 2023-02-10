@@ -56,6 +56,11 @@ public class EmailDomainBlocks
             Console.WriteLine(ex.Message);
             Environment.Exit(1);
         }
+        if (blockedEmailDomains.Count == 0)
+        {
+            Console.WriteLine("No email domain blocks found.");
+            return;
+        }
         string? longestDomain = blockedEmailDomains.OrderByDescending(bd => bd.Domain!.Length).First().Domain;
         string strFormat = "{0,-" + longestDomain!.Length + "} {1,-11}";
         Console.WriteLine(strFormat,
