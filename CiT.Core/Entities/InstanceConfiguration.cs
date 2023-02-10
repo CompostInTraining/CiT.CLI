@@ -1,7 +1,10 @@
+using CiT.Core.Configuration;
+using CiT.Core.Validation;
+
 namespace CiT.Core.Entities;
 
-public class InstanceConfiguration
+public class InstanceConfiguration : ConfigurationBase
 {
-    public string? Url { get; set; }
-    public string? AccessToken { get; set; }
+    [ConfigRequired] public string? Url { get; set; }
+    [ConfigRequired] public string? AccessToken { get; set; }
 }

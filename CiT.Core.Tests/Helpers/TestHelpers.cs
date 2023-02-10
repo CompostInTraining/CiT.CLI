@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace CiT.Core.Tests.TestHelpers
@@ -106,6 +107,21 @@ namespace CiT.Core.Tests.TestHelpers
                 }
             }
             return domainObject;
+        }
+    }
+    public static class RandomString
+    {
+        public static string New(int length = 32)
+        {
+            const string src = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            var sb = new StringBuilder();
+            Random RNG = new Random();
+            for (var i = 0; i < length; i++)
+            {
+                var c = src[RNG.Next(0, src.Length)];
+                sb.Append(c);
+            }
+            return sb.ToString();
         }
     }
 }

@@ -1,41 +1,47 @@
 ﻿using System.Configuration;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
+using CiT.Core.Exceptions;
 using CiT.Core.Tests.TestHelpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+#pragma warning disable CS8618
 
 namespace CiT.Core.Tests.Configuration;
 
 [TestClass()]
 public class ConfigManagerTests
 {
-    private IConfigManager configManager;
-    private Mock<IConfiguration> config;
-    private InstanceConfiguration instanceConfiguration;
+    private IConfigManager _configManager;
+    private Mock<IConfiguration> _config;
+    private InstanceConfiguration _instanceConfiguration;
     [TestInitialize]
     public void Init() {
-        config = new Mock<IConfiguration>();
-        instanceConfiguration = new InstanceConfiguration();
-        configManager = new ConfigManager(
-            config.Object, instanceConfiguration);
+        _config = new Mock<IConfiguration>();
+        _instanceConfiguration = new InstanceConfiguration()
+        {
+            Url = "https://mastodon.example.com",
+            AccessToken = RandomString.New()
+        };
+        _configManager = new ConfigManager(
+            _config.Object, _instanceConfiguration);
     }
     [TestMethod]
     public void ConfigManager_HasProperties() {
         // Assert
-        Assert.IsTrue(configManager.HasProperty("Configuration"));
-        Assert.IsTrue(configManager.HasProperty("Instance"));
+        Assert.IsTrue(_configManager.HasProperty("Configuration"));
+        Assert.IsTrue(_configManager.HasProperty("Instance"));
     }
     [TestMethod]
     public void GetConfigValue_Success() {
         // Arrange
         var expected = "ExpectedConfig";
 
-        config.SetupGet(x => x[It.IsAny<string>()]).Returns(expected);
+        _config.SetupGet(x => x[It.IsAny<string>()]).Returns(expected);
 
         // Act
-        var actual = configManager.GetConfigValue("ValidName");
+        var actual = _configManager.GetConfigValue("ValidName");
 
         // Assert
         Assert.AreEqual(expected, actual);
@@ -44,11 +50,20 @@ public class ConfigManagerTests
     [ExpectedException(typeof(ConfigurationErrorsException))]
     public void GetConfigValue_Throws_ConfigurationErrorsException() {
         // Arrange
-        config.SetupGet(x => x[It.IsAny<string>()]).Returns("");
+        _config.SetupGet(x => x[It.IsAny<string>()]).Returns("");
 
         // Act
-        configManager.GetConfigValue("InvalidName");
+        _configManager.GetConfigValue("InvalidName");
 
         // Assert - Exception
+    }
+    [TestMethod]
+    [ExpectedException(typeof(InvalidConfigurationException))]
+    public void InvalidConfigurationInitialization_Throws_InvalidConfigurationException()
+    {
+        _config = new Mock<IConfiguration>();
+        _instanceConfiguration = new InstanceConfiguration();
+        _configManager = new ConfigManager(
+            _config.Object, _instanceConfiguration);
     }
 }

@@ -1,5 +1,7 @@
 using System.Configuration;
 using CiT.Core.Entities;
+using CiT.Core.Exceptions;
+using CiT.Core.Validation;
 using Microsoft.Extensions.Configuration;
 
 namespace CiT.Core.Configuration;
@@ -20,6 +22,11 @@ public class ConfigManager : IConfigManager
     {
         Configuration = configuration;
         Instance = instance;
+
+        if (!Instance.IsValid())
+        {
+            throw new InvalidConfigurationException();
+        }
     }
     public string GetConfigValue(string key)
     {
@@ -31,4 +38,8 @@ public class ConfigManager : IConfigManager
         }
         return value;
     }
+}
+public abstract class ConfigurationBase
+{
+    public bool IsValid() => !this.IsAnyNullOrEmpty();
 }
