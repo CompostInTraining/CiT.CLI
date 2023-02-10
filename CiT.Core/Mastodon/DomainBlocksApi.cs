@@ -56,4 +56,10 @@ public class DomainBlocksApi : ApiClient
         string responseString = await response.Content.ReadAsStringAsync();
         return ((int)response.StatusCode, responseString);
     }
+    public async Task<dynamic> DeleteInstanceBlockedDomain(BlockedDomain blockedDomain)
+    {
+        HttpResponseMessage response = await Client.DeleteAsync($"{_domainBlocksApiUrl}/{blockedDomain.Id}");
+        string responseString = await response.Content.ReadAsStringAsync();
+        return ((int)response.StatusCode, responseString);
+    }
 }

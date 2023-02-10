@@ -30,6 +30,12 @@ public class DomainBlocks
             case "add":
                 AddCommand();
                 break;
+            case "remove":
+                RemoveCommand();
+                break;
+            default:
+                Console.WriteLine("Command not recognized");
+                break;
         }
     }
     private void AddCommand()
@@ -81,6 +87,22 @@ public class DomainBlocks
         {
             Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
             Console.WriteLine(blockedDomain.DomainInfo);
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
+    }
+    private void RemoveCommand()
+    {
+        List<BlockedDomain> blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
+        BlockedDomain? blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        if (blockedDomain is not null)
+        {
+            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
+            var actionResult = _apiClient.DeleteInstanceBlockedDomain(blockedDomain);
+            (int statusCode, string response) result = actionResult.Result;
+            Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
         }
         else
         {
