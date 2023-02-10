@@ -27,7 +27,7 @@ public class IpAddressBlocksApi : ApiClient
         string responseContent = await result.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<List<BlockedIpAddress>>(responseContent)!;
         rtnObj.AddRange(obj);
-        while (linksFromHeaders is not null && !string.IsNullOrEmpty(linksFromHeaders.NextLink))
+        while (!string.IsNullOrEmpty(linksFromHeaders.NextLink))
         {
             result = await Client.GetAsync(linksFromHeaders.NextLink);
             result.Headers.TryGetValues("Link", out linkHeaders);
