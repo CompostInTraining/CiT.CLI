@@ -46,7 +46,7 @@ public class IpAddressBlocks
     }
     private void ShowCommand()
     {
-        List<BlockedIpAddress>? blockedIpAddresses = null;
+        List<BlockedIpAddress>? blockedIpAddresses = new();
         try
         {
             blockedIpAddresses = _apiClient.GetInstanceBlockedIpAddresses().Result;
@@ -56,7 +56,7 @@ public class IpAddressBlocks
             Console.WriteLine(ex.Message);
             Environment.Exit(1);
         }
-        if (blockedIpAddresses.Count == 0)
+        if (blockedIpAddresses!.Count == 0)
         {
             Console.WriteLine("No IP Address blocks found.");
             return;
@@ -79,8 +79,13 @@ public class IpAddressBlocks
     }
     private void QueryCommand()
     {
-        List<BlockedIpAddress> blockedIpAddresses = _apiClient.GetInstanceBlockedIpAddresses().Result;
-        BlockedIpAddress blockedIpAddress =
+        List<BlockedIpAddress>? blockedIpAddresses = _apiClient.GetInstanceBlockedIpAddresses().Result;
+        if (blockedIpAddresses is null)
+        {
+            Console.WriteLine("No IP addresses found in blocklist.");
+            return;
+        }
+        BlockedIpAddress? blockedIpAddress =
             blockedIpAddresses.Find(ip => ip.Address == _actionArgs[1]);
         if (blockedIpAddress is not null)
         {
@@ -94,7 +99,12 @@ public class IpAddressBlocks
     }
     private void RemoveCommand()
     {
-        List<BlockedIpAddress> blockedIpAddresses = _apiClient.GetInstanceBlockedIpAddresses().Result;
+        List<BlockedIpAddress>? blockedIpAddresses = _apiClient.GetInstanceBlockedIpAddresses().Result;
+        if (blockedIpAddresses is null)
+        {
+            Console.WriteLine("No IP addresses found in blocklist.");
+            return;
+        }
         BlockedIpAddress? blockedIpAddress =
             blockedIpAddresses.Find(ip => ip.Address == _actionArgs[1]);
         if (blockedIpAddress is not null)

@@ -16,9 +16,9 @@ public class BlockedEmailDomain : BlockObjectBase
 }
 public class BlockedEmailDomainHistory
 {
-    private dynamic _day;
+    private dynamic? _day;
     [JsonProperty("day")]
-    public dynamic Day
+    public dynamic? Day
     {
         get => _day;
         set
