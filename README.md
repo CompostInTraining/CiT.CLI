@@ -24,6 +24,7 @@ cit domain-blocks <command> [<Arg>...]
   optionally specifying the severity and providing a comment.
     * `<severity>` should be one of `suspend`, `silence`, or `noop` per
       the [Mastodon docs](https://docs.joinmastodon.org/methods/admin/domain_blocks/#form-data-parameters)
+* `remove <domain>` - remove a domain from the blocklist
 
 #### email-domain-blocks
 
