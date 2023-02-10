@@ -12,5 +12,6 @@ public abstract class ApiClient
         Client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", configManager.Instance.AccessToken);
         Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        Client.DefaultRequestHeaders.Add("User-Agent", "CiT-CLI");
     }
 }
