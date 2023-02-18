@@ -152,7 +152,6 @@ Usage:
 
 Where:
 	<address> is the address in the ruleset.
-
 """,
 		Add = """
 Add an IP address to the ruleset.
