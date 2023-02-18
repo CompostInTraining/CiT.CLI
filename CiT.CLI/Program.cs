@@ -47,9 +47,8 @@ internal static class Program
         string[] actionArgs = args.Skip(1).ToArray();
         if (args.Length == 0)
         {
-            Console.WriteLine("No arguments provided.");
-            // printHelp(); // TODO
-            Environment.Exit(1);
+            Console.WriteLine(Info.Program.Main);
+            Environment.Exit(0);
         }
         switch (args[0])
         {
@@ -63,7 +62,7 @@ internal static class Program
                 new IpAddressBlocks(actionArgs, configManager).Process();
                 break;
             default:
-                Console.WriteLine("Unknown command");
+                Console.WriteLine(Info.Program.Main);
                 break;
         }
     }
