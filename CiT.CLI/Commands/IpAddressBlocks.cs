@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
+using CiT.Core.Extensions;
 using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
@@ -22,19 +23,39 @@ public class IpAddressBlocks
         switch (_actionArgs[0])
         {
             case "show":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.IpAddressBlocks.Show);
+		            return;
+	            }
                 ShowCommand();
                 break;
             case "query":
-                QueryCommand();
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.IpAddressBlocks.Query);
+		            return;
+	            }
+	            QueryCommand();
                 break;
             case "add":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.IpAddressBlocks.Add);
+		            return;
+	            }
                 AddCommand();
                 break;
             case "remove":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.IpAddressBlocks.Remove);
+		            return;
+	            }
                 RemoveCommand();
                 break;
             default:
-                Console.WriteLine($"Command \"{_actionArgs[0]}\" not recognized");
+                Console.WriteLine(Info.IpAddressBlocks.Main);
                 break;
         }
     }

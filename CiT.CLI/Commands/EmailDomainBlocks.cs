@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
+using CiT.Core.Extensions;
 using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
@@ -21,19 +22,39 @@ public class EmailDomainBlocks
         switch (_actionArgs[0])
         {
             case "show":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.EmailDomainBlocks.Show);
+		            return;
+	            }
                 ShowCommand();
                 break;
             case "query":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.EmailDomainBlocks.Query);
+		            return;
+	            }
                 QueryCommand();
                 break;
             case "add":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.EmailDomainBlocks.Add);
+		            return;
+	            }
                 AddCommand();
                 break;
             case "remove":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.EmailDomainBlocks.Remove);
+		            return;
+	            }
                 RemoveCommand();
                 break;
             default:
-                Console.WriteLine($"Command \"{_actionArgs[0]}\" not recognized");
+                Console.WriteLine(Info.EmailDomainBlocks.Main);
                 break;
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
+using CiT.Core.Extensions;
 using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
@@ -21,19 +22,39 @@ public class DomainBlocks
         switch (_actionArgs[0])
         {
             case "show":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.DomainBlocks.Show);
+		            return;
+	            }
                 ShowCommand();
                 break;
             case "query":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.DomainBlocks.Query);
+		            return;
+	            }
                 QueryCommand();
                 break;
             case "add":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.DomainBlocks.Add);
+		            return;
+	            }
                 AddCommand();
                 break;
             case "remove":
+	            if (_actionArgs[1].IsHelp())
+	            {
+		            Console.WriteLine(Info.DomainBlocks.Remove);
+		            return;
+	            }
                 RemoveCommand();
                 break;
             default:
-                Console.WriteLine("Command not recognized");
+                Console.WriteLine(Info.DomainBlocks.Main);
                 break;
         }
     }
