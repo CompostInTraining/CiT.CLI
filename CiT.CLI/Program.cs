@@ -55,6 +55,9 @@ internal static class Program
             case "domain-blocks":
                 new DomainBlocks(actionArgs, configManager).Process();
                 break;
+            case "domains":
+                new Domains(actionArgs, configManager).Process();
+                break;
             case "email-domain-blocks":
                 new EmailDomainBlocks(actionArgs, configManager).Process();
                 break;
