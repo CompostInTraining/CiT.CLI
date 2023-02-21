@@ -1,5 +1,3 @@
-using System;
-
 namespace CiT.CLI.Info;
 
 public static class EmailDomainBlocks
