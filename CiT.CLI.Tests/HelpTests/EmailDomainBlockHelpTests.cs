@@ -10,7 +10,7 @@ namespace CiT.CLI.Tests.HelpTests;
 [TestClass]
 public class EmailDomainBlockHelpTests
 {
-    private IConfigManager _configManager;
+    private IConfigManager _configManager = null!;
     [TestInitialize]
     public void Initialize()
     {
