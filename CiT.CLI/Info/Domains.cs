@@ -24,6 +24,5 @@ Usage:
 
 Where:
     <domain> is a domain your instance knows about.
-
 """;
 }
