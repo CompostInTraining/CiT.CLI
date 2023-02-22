@@ -5,12 +5,12 @@ using CiT.Core.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace CiT.CLI.Tests;
+namespace CiT.CLI.Tests.HelpTests;
 
 [TestClass]
 public class DomainBlockHelpTests
 {
-    private IConfigManager _configManager;
+    private IConfigManager _configManager = null!;
     [TestInitialize]
     public void Initialize()
     {
