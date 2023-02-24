@@ -12,15 +12,42 @@ namespace CiT.Core.Mastodon;
 
 public class EmailDomainBlocksApi : ApiClient
 {
+    /// <summary>
+    ///     The Mastodon email blocks API URL.
+    /// </summary>
     private static string? _emailDomainBlocksApiUrl;
+    /// <summary>
+    ///     Constructs an EmailDomainBlocksApi object using the ConfigManager to set the API URL.
+    /// </summary>
+    /// <param name="configManager">The ConfigManager.</param>
     public EmailDomainBlocksApi(IConfigManager configManager) : base(configManager)
     {
         _emailDomainBlocksApiUrl = $"{configManager.Instance.Url}/api/v1/admin/email_domain_blocks";
     }
+    /// <summary>
+    ///     Add an email domain to the blocklist.
+    /// </summary>
+    /// <param name="domain">The domain to add.</param>
+    /// <returns>A tuple containing the API response status code and text response.</returns>
+    public async Task<(int, string)> AddEmailDomainBlock(string domain)
+    {
+        Dictionary<string, string> payload = new()
+        {
+            ["domain"] = domain
+        };
+        var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+        var response = await Client.PostAsync(_emailDomainBlocksApiUrl, stringContent);
+        string responseString = await response.Content.ReadAsStringAsync();
+        return ((int)response.StatusCode, responseString);
+    }
+    /// <summary>
+    ///     Get all email domains on the email domain blocklist.
+    /// </summary>
+    /// <returns>A list of BlockedEmailDomain.</returns>
     public async Task<List<BlockedEmailDomain>> GetInstanceBlockedEmailDomains()
     {
         List<BlockedEmailDomain> rtnObj = new();
-        HttpResponseMessage result = await Client.GetAsync($"{_emailDomainBlocksApiUrl}?limit=200");
+        var result = await Client.GetAsync($"{_emailDomainBlocksApiUrl}?limit=200");
         result.EnsureSuccessStatusCode();
         bool linkHeadersFound = result.Headers.TryGetValues("Link", out var linkHeaders);
         var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders?.First() ?? "");
@@ -38,20 +65,14 @@ public class EmailDomainBlocksApi : ApiClient
         }
         return rtnObj;
     }
-    public async Task<dynamic> AddEmailDomainBlock(string domain)
+    /// <summary>
+    ///     Remove an email domain from the blocklist.
+    /// </summary>
+    /// <param name="blockedEmailDomain">A BlockedEmailDomain object representing the domain to remove.</param>
+    /// <returns>A tuple containing the API response status code and text response.</returns>
+    public async Task<(int, string)> RemoveEmailDomainBlock(BlockedEmailDomain blockedEmailDomain)
     {
-        Dictionary<string, string> payload = new()
-        {
-            ["domain"] = domain
-        };
-        var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsync(_emailDomainBlocksApiUrl, stringContent);
-        string responseString = await response.Content.ReadAsStringAsync();
-        return ((int)response.StatusCode, responseString);
-    }
-    public async Task<dynamic> RemoveEmailDomainBlock(BlockedEmailDomain blockedEmailDomain)
-    {
-        HttpResponseMessage response = await Client.DeleteAsync($"{_emailDomainBlocksApiUrl}/{blockedEmailDomain.Id}");
+        var response = await Client.DeleteAsync($"{_emailDomainBlocksApiUrl}/{blockedEmailDomain.Id}");
         string responseString = await response.Content.ReadAsStringAsync();
         return ((int)response.StatusCode, responseString);
     }

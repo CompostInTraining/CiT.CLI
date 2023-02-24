@@ -2,10 +2,13 @@ using Newtonsoft.Json;
 
 namespace CiT.Core.Entities.Measures;
 
+/// <inheritdoc />
 public class InstanceFollowersMeasuresRequest : MeasuresRequestBase
 {
-    [JsonProperty("instance_followers")] public InstanceDomain? InstanceFollowers { get; set; }
-    public InstanceFollowersMeasuresRequest() { }
+    /// <summary>
+    ///     Constructs an InstanceFollowersMeasuresRequest using the provided domain to set the <see cref="InstanceDomain" />.
+    /// </summary>
+    /// <param name="domain">The remote domain for the measures request.</param>
     public InstanceFollowersMeasuresRequest(string domain)
     {
         Keys = "instance_followers";
@@ -14,4 +17,9 @@ public class InstanceFollowersMeasuresRequest : MeasuresRequestBase
             Domain = domain
         };
     }
+    /// <summary>
+    ///     The remote domain for the measures request.
+    /// </summary>
+    [JsonProperty("instance_followers")]
+    public InstanceDomain? InstanceFollowers { get; set; }
 }

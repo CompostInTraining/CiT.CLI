@@ -10,7 +10,6 @@ namespace CiT.CLI.Tests.HelpTests;
 [TestClass]
 public class IpAddressHelpTests
 {
-    private IConfigManager _configManager = null!;
     [TestInitialize]
     public void Initialize()
     {
@@ -21,6 +20,22 @@ public class IpAddressHelpTests
         var moqConfig = new Mock<IConfigManager>();
         moqConfig.Setup(c => c.Instance).Returns(instanceConfig);
         _configManager = moqConfig.Object;
+    }
+    private IConfigManager _configManager = null!;
+    [TestMethod]
+    public void TestIpAddressBlocksAddHelp()
+    {
+        // Arrange
+        IpAddressBlocks target = new(new[]
+        {
+            "add", "help"
+        }, _configManager);
+
+        // Act
+        using var consoleOutput = new ConsoleOutput();
+        target.Process();
+
+        Assert.AreEqual(Info.IpAddressBlocks.Add, consoleOutput.GetOutput());
     }
     [TestMethod]
     public void TestIpAddressBlocksMainHelp()
@@ -38,21 +53,6 @@ public class IpAddressHelpTests
         Assert.AreEqual(Info.IpAddressBlocks.Main, consoleOutput.GetOutput());
     }
     [TestMethod]
-    public void TestIpAddressBlocksShowHelp()
-    {
-        // Arrange
-        IpAddressBlocks target = new(new[]
-        {
-            "show", "help"
-        }, _configManager);
-
-        // Act
-        using var consoleOutput = new ConsoleOutput();
-        target.Process();
-
-        Assert.AreEqual(Info.IpAddressBlocks.Show, consoleOutput.GetOutput());
-    }
-    [TestMethod]
     public void TestIpAddressBlocksQueryHelp()
     {
         // Arrange
@@ -68,21 +68,6 @@ public class IpAddressHelpTests
         Assert.AreEqual(Info.IpAddressBlocks.Query, consoleOutput.GetOutput());
     }
     [TestMethod]
-    public void TestIpAddressBlocksAddHelp()
-    {
-        // Arrange
-        IpAddressBlocks target = new(new[]
-        {
-            "add", "help"
-        }, _configManager);
-
-        // Act
-        using var consoleOutput = new ConsoleOutput();
-        target.Process();
-
-        Assert.AreEqual(Info.IpAddressBlocks.Add, consoleOutput.GetOutput());
-    }
-    [TestMethod]
     public void TestIpAddressBlocksRemoveHelp()
     {
         // Arrange
@@ -96,5 +81,20 @@ public class IpAddressHelpTests
         target.Process();
 
         Assert.AreEqual(Info.IpAddressBlocks.Remove, consoleOutput.GetOutput());
+    }
+    [TestMethod]
+    public void TestIpAddressBlocksShowHelp()
+    {
+        // Arrange
+        IpAddressBlocks target = new(new[]
+        {
+            "show", "help"
+        }, _configManager);
+
+        // Act
+        using var consoleOutput = new ConsoleOutput();
+        target.Process();
+
+        Assert.AreEqual(Info.IpAddressBlocks.Show, consoleOutput.GetOutput());
     }
 }

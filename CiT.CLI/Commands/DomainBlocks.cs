@@ -8,49 +8,83 @@ using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
 
+/// <summary>
+///     DomainBlocks commands.
+/// </summary>
 public class DomainBlocks
 {
+    /// <summary>
+    ///     The current object's action arguments.
+    /// </summary>
     private readonly string[] _actionArgs;
+    /// <summary>
+    ///     The current object's API client.
+    /// </summary>
     private readonly DomainBlocksApi _apiClient;
+    /// <summary>
+    ///     Constructs a DomainBlocks object.
+    /// </summary>
+    /// <param name="actionArgs">The arguments for the current action.</param>
+    /// <param name="configManager">The ConfigManager.</param>
     public DomainBlocks(string[] actionArgs, IConfigManager configManager)
     {
         _actionArgs = actionArgs;
         _apiClient = new DomainBlocksApi(configManager);
     }
+    /// <summary>
+    ///     Command to add a domain to the blocklist.
+    /// </summary>
+    /// <exception cref="InvalidOperationException">Thrown when provided arguments can't be processed.</exception>
+    private void AddCommand()
+    {
+        string[] actionArgs = _actionArgs.Skip(1).ToArray();
+        dynamic actionResult = actionArgs.Length switch
+        {
+            1 => _apiClient.AddDomainBlock(actionArgs[0]),
+            2 => _apiClient.AddDomainBlock(actionArgs[0], actionArgs[1]),
+            3 => _apiClient.AddDomainBlock(actionArgs[0], actionArgs[1], actionArgs[2]),
+            _ => throw new InvalidOperationException()
+        };
+        (int statusCode, string response) result = actionResult.Result;
+        Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
+    }
+    /// <summary>
+    ///     Process subcommand arguments.
+    /// </summary>
     public void Process()
     {
         switch (_actionArgs[0])
         {
             case "show":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.DomainBlocks.Show);
-		            return;
-	            }
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.DomainBlocks.Show);
+                    return;
+                }
                 ShowCommand();
                 break;
             case "query":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.DomainBlocks.Query);
-		            return;
-	            }
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.DomainBlocks.Query);
+                    return;
+                }
                 QueryCommand();
                 break;
             case "add":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.DomainBlocks.Add);
-		            return;
-	            }
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.DomainBlocks.Add);
+                    return;
+                }
                 AddCommand();
                 break;
             case "remove":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.DomainBlocks.Remove);
-		            return;
-	            }
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.DomainBlocks.Remove);
+                    return;
+                }
                 RemoveCommand();
                 break;
             default:
@@ -58,19 +92,45 @@ public class DomainBlocks
                 break;
         }
     }
-    private void AddCommand()
+    /// <summary>
+    ///     Command to query the blocklist for a single domain.
+    /// </summary>
+    private void QueryCommand()
     {
-        string[] actionArgs = _actionArgs.Skip(1).ToArray();
-        dynamic actionResult = actionArgs.Length switch
+        var blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
+        var blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        if (blockedDomain is not null)
         {
-            1 => _apiClient.AddDomainBlock(actionArgs[0]),
-            2 => _apiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1]),
-            3 => _apiClient.AddDomainBlock(actionArgs[0], severity: actionArgs[1], comment: actionArgs[2]),
-            _ => throw new InvalidOperationException()
-        };
-        (int statusCode, string response) result = actionResult.Result;
-        Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
+            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
+            Console.WriteLine(blockedDomain.DomainInfo);
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
     }
+    /// <summary>
+    ///     Command to remove a domain from the blocklist.
+    /// </summary>
+    private void RemoveCommand()
+    {
+        var blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
+        var blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        if (blockedDomain is not null)
+        {
+            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
+            var actionResult = _apiClient.DeleteInstanceBlockedDomain(blockedDomain);
+            (int statusCode, string response) result = actionResult.Result;
+            Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
+    }
+    /// <summary>
+    ///     Command to show all domains on the blocklist.
+    /// </summary>
     private void ShowCommand()
     {
         List<BlockedDomain>? blockedDomains = null;
@@ -93,7 +153,7 @@ public class DomainBlocks
         Console.WriteLine(strFormat,
             "Domain", "Severity", "Comment");
         Console.WriteLine(new string('-', longestDomain.Length + 7 + 10));
-        foreach (BlockedDomain bd in blockedDomains)
+        foreach (var bd in blockedDomains)
         {
             string comment = bd.PublicComment ?? "";
             if (!string.IsNullOrEmpty(bd.PrivateComment))
@@ -102,36 +162,6 @@ public class DomainBlocks
             }
             Console.WriteLine(strFormat,
                 bd.Domain, bd.Severity, comment);
-        }
-    }
-    private void QueryCommand()
-    {
-        List<BlockedDomain> blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
-        BlockedDomain? blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
-        if (blockedDomain is not null)
-        {
-            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
-            Console.WriteLine(blockedDomain.DomainInfo);
-        }
-        else
-        {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
-        }
-    }
-    private void RemoveCommand()
-    {
-        List<BlockedDomain> blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
-        BlockedDomain? blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
-        if (blockedDomain is not null)
-        {
-            Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
-            var actionResult = _apiClient.DeleteInstanceBlockedDomain(blockedDomain);
-            (int statusCode, string response) result = actionResult.Result;
-            Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
-        }
-        else
-        {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
         }
     }
 }

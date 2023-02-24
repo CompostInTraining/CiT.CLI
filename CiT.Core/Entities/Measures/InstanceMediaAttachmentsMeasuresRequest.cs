@@ -2,10 +2,14 @@ using Newtonsoft.Json;
 
 namespace CiT.Core.Entities.Measures;
 
+/// <inheritdoc />
 public class InstanceMediaAttachmentsMeasuresRequest : MeasuresRequestBase
 {
-    [JsonProperty("instance_media_attachments")] public InstanceDomain? InstanceMediaAttachments { get; set; }
-    public InstanceMediaAttachmentsMeasuresRequest() { }
+    /// <summary>
+    ///     Constructs an InstanceMediaAttachmentsMeasuresRequest using the provided domain to set the
+    ///     <see cref="InstanceDomain" />.
+    /// </summary>
+    /// <param name="domain">The remote domain for the measures request.</param>
     public InstanceMediaAttachmentsMeasuresRequest(string domain)
     {
         Keys = "instance_media_attachments";
@@ -14,4 +18,9 @@ public class InstanceMediaAttachmentsMeasuresRequest : MeasuresRequestBase
             Domain = domain
         };
     }
+    /// <summary>
+    ///     The remote domain for the measures request.
+    /// </summary>
+    [JsonProperty("instance_media_attachments")]
+    public InstanceDomain? InstanceMediaAttachments { get; set; }
 }

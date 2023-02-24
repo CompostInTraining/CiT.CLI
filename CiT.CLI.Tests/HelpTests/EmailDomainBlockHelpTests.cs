@@ -10,7 +10,6 @@ namespace CiT.CLI.Tests.HelpTests;
 [TestClass]
 public class EmailDomainBlockHelpTests
 {
-    private IConfigManager _configManager = null!;
     [TestInitialize]
     public void Initialize()
     {
@@ -21,6 +20,22 @@ public class EmailDomainBlockHelpTests
         var moqConfig = new Mock<IConfigManager>();
         moqConfig.Setup(c => c.Instance).Returns(instanceConfig);
         _configManager = moqConfig.Object;
+    }
+    private IConfigManager _configManager = null!;
+    [TestMethod]
+    public void TestEmailDomainBlocksAddHelp()
+    {
+        // Arrange
+        EmailDomainBlocks target = new(new[]
+        {
+            "add", "help"
+        }, _configManager);
+
+        // Act
+        using var consoleOutput = new ConsoleOutput();
+        target.Process();
+
+        Assert.AreEqual(Info.EmailDomainBlocks.Add, consoleOutput.GetOutput());
     }
     [TestMethod]
     public void TestEmailDomainBlocksMainHelp()
@@ -38,21 +53,6 @@ public class EmailDomainBlockHelpTests
         Assert.AreEqual(Info.EmailDomainBlocks.Main, consoleOutput.GetOutput());
     }
     [TestMethod]
-    public void TestEmailDomainBlocksShowHelp()
-    {
-        // Arrange
-        EmailDomainBlocks target = new(new[]
-        {
-            "show", "help"
-        }, _configManager);
-
-        // Act
-        using var consoleOutput = new ConsoleOutput();
-        target.Process();
-
-        Assert.AreEqual(Info.EmailDomainBlocks.Show, consoleOutput.GetOutput());
-    }
-    [TestMethod]
     public void TestEmailDomainBlocksQueryHelp()
     {
         // Arrange
@@ -68,21 +68,6 @@ public class EmailDomainBlockHelpTests
         Assert.AreEqual(Info.EmailDomainBlocks.Query, consoleOutput.GetOutput());
     }
     [TestMethod]
-    public void TestEmailDomainBlocksAddHelp()
-    {
-        // Arrange
-        EmailDomainBlocks target = new(new[]
-        {
-            "add", "help"
-        }, _configManager);
-
-        // Act
-        using var consoleOutput = new ConsoleOutput();
-        target.Process();
-
-        Assert.AreEqual(Info.EmailDomainBlocks.Add, consoleOutput.GetOutput());
-    }
-    [TestMethod]
     public void TestEmailDomainBlocksRemoveHelp()
     {
         // Arrange
@@ -96,5 +81,20 @@ public class EmailDomainBlockHelpTests
         target.Process();
 
         Assert.AreEqual(Info.EmailDomainBlocks.Remove, consoleOutput.GetOutput());
+    }
+    [TestMethod]
+    public void TestEmailDomainBlocksShowHelp()
+    {
+        // Arrange
+        EmailDomainBlocks target = new(new[]
+        {
+            "show", "help"
+        }, _configManager);
+
+        // Act
+        using var consoleOutput = new ConsoleOutput();
+        target.Process();
+
+        Assert.AreEqual(Info.EmailDomainBlocks.Show, consoleOutput.GetOutput());
     }
 }

@@ -4,9 +4,19 @@ using CiT.Core.Configuration;
 
 namespace CiT.Core.Mastodon;
 
+/// <summary>
+///     The base HTTP client for interacting with the Mastodon API.
+/// </summary>
 public abstract class ApiClient
 {
+    /// <summary>
+    ///     The HttpClient object.
+    /// </summary>
     protected static readonly HttpClient Client = new();
+    /// <summary>
+    ///     ApiClient constructor to initialize the Authorization, Accept, and User-Agent headers.
+    /// </summary>
+    /// <param name="configManager"></param>
     protected ApiClient(IConfigManager configManager)
     {
         Client.DefaultRequestHeaders.Authorization =

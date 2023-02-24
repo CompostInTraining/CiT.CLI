@@ -12,15 +12,44 @@ namespace CiT.Core.Mastodon;
 
 public class IpAddressBlocksApi : ApiClient
 {
+    /// <summary>
+    ///     The Mastodon IP address blocks API URL.
+    /// </summary>
     private static string? _ipAddressBlocksApiUrl;
+    /// <summary>
+    ///     Constructs an IpAddressBlocksApi object using the ConfigManager to set the API URL.
+    /// </summary>
+    /// <param name="configManager">The ConfigManager.</param>
     public IpAddressBlocksApi(IConfigManager configManager) : base(configManager)
     {
         _ipAddressBlocksApiUrl = $"{configManager.Instance.Url}/api/v1/admin/ip_blocks";
     }
+    /// <summary>
+    ///     Add an IP address to the blocklist.
+    /// </summary>
+    /// <param name="ipAddress">The IP address to add.</param>
+    /// <param name="severity">The severity of the block/ban.</param>
+    /// <returns>A tuple containing the API response status code and text response.</returns>
+    public async Task<(int, string)> AddIpAddressBlock(string ipAddress, string severity)
+    {
+        Dictionary<string, string> payload = new()
+        {
+            ["ip"] = ipAddress,
+            ["severity"] = severity
+        };
+        var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
+        var response = await Client.PostAsync(_ipAddressBlocksApiUrl, stringContent);
+        string responseString = await response.Content.ReadAsStringAsync();
+        return ((int)response.StatusCode, responseString);
+    }
+    /// <summary>
+    ///     Returns all IP addresses on the blocklist.
+    /// </summary>
+    /// <returns>A list of BlockedIpAddress.</returns>
     public async Task<List<BlockedIpAddress>?> GetInstanceBlockedIpAddresses()
     {
         List<BlockedIpAddress> rtnObj = new();
-        HttpResponseMessage result = await Client.GetAsync($"{_ipAddressBlocksApiUrl}?limit=200");
+        var result = await Client.GetAsync($"{_ipAddressBlocksApiUrl}?limit=200");
         result.EnsureSuccessStatusCode();
         bool linkHeadersFound = result.Headers.TryGetValues("Link", out var linkHeaders);
         var linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders?.First() ?? "");
@@ -38,21 +67,14 @@ public class IpAddressBlocksApi : ApiClient
         }
         return rtnObj;
     }
-    public async Task<dynamic> AddIpAddressBlock(string ipAddress, string severity)
+    /// <summary>
+    ///     Remove an IP address from the blocklist.
+    /// </summary>
+    /// <param name="blockedIpAddress">A BlockedIpAddress object representing the address to remove.</param>
+    /// <returns>A tuple containing the API response status code and text response.</returns>
+    public async Task<(int, string)> RemoveIpAddressBlock(BlockedIpAddress blockedIpAddress)
     {
-        Dictionary<string, string> payload = new()
-        {
-            ["ip"] = ipAddress,
-            ["severity"] = severity
-        };
-        var stringContent = new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json");
-        HttpResponseMessage response = await Client.PostAsync(_ipAddressBlocksApiUrl, stringContent);
-        string responseString = await response.Content.ReadAsStringAsync();
-        return ((int)response.StatusCode, responseString);
-    }
-    public async Task<dynamic> RemoveIpAddressBlock(BlockedIpAddress blockedIpAddress)
-    {
-        HttpResponseMessage response = await Client.DeleteAsync($"{_ipAddressBlocksApiUrl}/{blockedIpAddress.Id}");
+        var response = await Client.DeleteAsync($"{_ipAddressBlocksApiUrl}/{blockedIpAddress.Id}");
         string responseString = await response.Content.ReadAsStringAsync();
         return ((int)response.StatusCode, responseString);
     }
