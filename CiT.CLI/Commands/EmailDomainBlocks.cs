@@ -8,56 +8,32 @@ using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
 
+/// <summary>
+///     EmailDomainBlocks commands.
+/// </summary>
 public class EmailDomainBlocks
 {
+    /// <summary>
+    ///     The current object's action arguments.
+    /// </summary>
     private readonly string[] _actionArgs;
+    /// <summary>
+    ///     The current object's API client.
+    /// </summary>
     private readonly EmailDomainBlocksApi _apiClient;
+    /// <summary>
+    ///     Constructs an EmailDomainBlocks object.
+    /// </summary>
+    /// <param name="actionArgs">The arguments for the current action.</param>
+    /// <param name="configManager">The ConfigManager.</param>
     public EmailDomainBlocks(string[] actionArgs, IConfigManager configManager)
     {
         _actionArgs = actionArgs;
         _apiClient = new EmailDomainBlocksApi(configManager);
     }
-    public void Process()
-    {
-        switch (_actionArgs[0])
-        {
-            case "show":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.EmailDomainBlocks.Show);
-		            return;
-	            }
-                ShowCommand();
-                break;
-            case "query":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.EmailDomainBlocks.Query);
-		            return;
-	            }
-                QueryCommand();
-                break;
-            case "add":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.EmailDomainBlocks.Add);
-		            return;
-	            }
-                AddCommand();
-                break;
-            case "remove":
-	            if (_actionArgs[1].IsHelp())
-	            {
-		            Console.WriteLine(Info.EmailDomainBlocks.Remove);
-		            return;
-	            }
-                RemoveCommand();
-                break;
-            default:
-                Console.WriteLine(Info.EmailDomainBlocks.Main);
-                break;
-        }
-    }
+    /// <summary>
+    ///     Command to add a domain to the email domain blocklist.
+    /// </summary>
     private void AddCommand()
     {
         string[] actionArgs = _actionArgs.Skip(1).ToArray();
@@ -65,6 +41,90 @@ public class EmailDomainBlocks
         (int statusCode, string response) result = actionResult.Result;
         Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
     }
+    /// <summary>
+    ///     Process subcommand arguments.
+    /// </summary>
+    public void Process()
+    {
+        switch (_actionArgs[0])
+        {
+            case "show":
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.EmailDomainBlocks.Show);
+                    return;
+                }
+                ShowCommand();
+                break;
+            case "query":
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.EmailDomainBlocks.Query);
+                    return;
+                }
+                QueryCommand();
+                break;
+            case "add":
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.EmailDomainBlocks.Add);
+                    return;
+                }
+                AddCommand();
+                break;
+            case "remove":
+                if (_actionArgs[1].IsHelp())
+                {
+                    Console.WriteLine(Info.EmailDomainBlocks.Remove);
+                    return;
+                }
+                RemoveCommand();
+                break;
+            default:
+                Console.WriteLine(Info.EmailDomainBlocks.Main);
+                break;
+        }
+    }
+    /// <summary>
+    ///     Command to query the email domain blocklist for a specific domain.
+    /// </summary>
+    private void QueryCommand()
+    {
+        var blockedEmailDomains = _apiClient.GetInstanceBlockedEmailDomains().Result;
+        var blockedEmailDomain =
+            blockedEmailDomains.Find(blockedEmailDomain => blockedEmailDomain.Domain == _actionArgs[1]);
+        if (blockedEmailDomain is not null)
+        {
+            Console.WriteLine($"Domain \"{blockedEmailDomain.Domain}\" found in blocklist.");
+            Console.WriteLine(blockedEmailDomain.DomainInfo);
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
+    }
+    /// <summary>
+    ///     Command to remove a domain from the email domain blocklist.
+    /// </summary>
+    private void RemoveCommand()
+    {
+        var blockedEmailDomains = _apiClient.GetInstanceBlockedEmailDomains().Result;
+        var blockedEmailDomain =
+            blockedEmailDomains.Find(blockedEmailDomain => blockedEmailDomain.Domain == _actionArgs[1]);
+        if (blockedEmailDomain is not null)
+        {
+            var actionResult = _apiClient.RemoveEmailDomainBlock(blockedEmailDomain);
+            (int statusCode, string response) result = actionResult.Result;
+            Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
+        }
+        else
+        {
+            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+        }
+    }
+    /// <summary>
+    ///     Command to show all domains on the email domain blocklist.
+    /// </summary>
     private void ShowCommand()
     {
         List<BlockedEmailDomain>? blockedEmailDomains = null;
@@ -87,41 +147,10 @@ public class EmailDomainBlocks
         Console.WriteLine(strFormat,
             "Domain", "Created At");
         Console.WriteLine(new string('-', longestDomain.Length + 11));
-        foreach (BlockedEmailDomain blockedEmailDomain in blockedEmailDomains)
+        foreach (var blockedEmailDomain in blockedEmailDomains)
         {
             Console.WriteLine(strFormat,
                 blockedEmailDomain.Domain, blockedEmailDomain.CreatedAt);
-        }
-    }
-    private void QueryCommand()
-    {
-        List<BlockedEmailDomain> blockedEmailDomains = _apiClient.GetInstanceBlockedEmailDomains().Result;
-        BlockedEmailDomain? blockedEmailDomain =
-            blockedEmailDomains.Find(blockedEmailDomain => blockedEmailDomain.Domain == _actionArgs[1]);
-        if (blockedEmailDomain is not null)
-        {
-            Console.WriteLine($"Domain \"{blockedEmailDomain.Domain}\" found in blocklist.");
-            Console.WriteLine(blockedEmailDomain.DomainInfo);
-        }
-        else
-        {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
-        }
-    }
-    private void RemoveCommand()
-    {
-        List<BlockedEmailDomain> blockedEmailDomains = _apiClient.GetInstanceBlockedEmailDomains().Result;
-        BlockedEmailDomain? blockedEmailDomain =
-            blockedEmailDomains.Find(blockedEmailDomain => blockedEmailDomain.Domain == _actionArgs[1]);
-        if (blockedEmailDomain is not null)
-        {
-            var actionResult = _apiClient.RemoveEmailDomainBlock(blockedEmailDomain);
-            (int statusCode, string response) result = actionResult.Result;
-            Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
-        }
-        else
-        {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
         }
     }
 }

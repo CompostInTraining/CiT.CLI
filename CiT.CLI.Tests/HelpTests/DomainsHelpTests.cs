@@ -10,7 +10,6 @@ namespace CiT.CLI.Tests.HelpTests;
 [TestClass]
 public class DomainsHelpTests
 {
-    private IConfigManager _configManager = null!;
     [TestInitialize]
     public void Initialize()
     {
@@ -22,6 +21,7 @@ public class DomainsHelpTests
         moqConfig.Setup(c => c.Instance).Returns(instanceConfig);
         _configManager = moqConfig.Object;
     }
+    private IConfigManager _configManager = null!;
     [TestMethod]
     public void TestDomainsMainHelp()
     {

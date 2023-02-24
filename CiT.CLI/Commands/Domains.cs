@@ -7,15 +7,32 @@ using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
 
+/// <summary>
+///     Domains commands.
+/// </summary>
 public class Domains
 {
+    /// <summary>
+    ///     The current object's action arguments.
+    /// </summary>
     private readonly string[] _actionArgs;
+    /// <summary>
+    ///     The current object's API client.
+    /// </summary>
     private readonly MeasuresApi _apiClient;
+    /// <summary>
+    ///     Constructs a Domains object.
+    /// </summary>
+    /// <param name="actionArgs">The arguments for the current action.</param>
+    /// <param name="configManager">The ConfigManager.</param>
     public Domains(string[] actionArgs, IConfigManager configManager)
     {
         _actionArgs = actionArgs;
         _apiClient = new MeasuresApi(configManager);
     }
+    /// <summary>
+    ///     Process subcommand arguments.
+    /// </summary>
     public void Process()
     {
         switch (_actionArgs[0])
@@ -34,11 +51,15 @@ public class Domains
                 break;
         }
     }
+    /// <summary>
+    ///     Command to query the instance for information on a specific domain.
+    /// </summary>
     private void QueryCommand()
     {
         var data = new Dictionary<string, string>();
         data["Accounts"] = _apiClient.GetInstanceAccounts(_actionArgs[1]).Result.Response![0].Total.ToString();
-        data["Media Attachments"] = _apiClient.GetInstanceMediaAttachments(_actionArgs[1]).Result.Response![0].HumanValue!;
+        data["Media Attachments"] =
+            _apiClient.GetInstanceMediaAttachments(_actionArgs[1]).Result.Response![0].HumanValue!;
         data["Follows"] = _apiClient.GetInstanceFollows(_actionArgs[1]).Result.Response![0].Total.ToString();
         data["Followers"] = _apiClient.GetInstanceFollowers(_actionArgs[1]).Result.Response![0].Total.ToString();
         data["Statuses"] = _apiClient.GetInstanceStatuses(_actionArgs[1]).Result.Response![0].Total.ToString();

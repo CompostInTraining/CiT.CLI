@@ -2,10 +2,14 @@ using Newtonsoft.Json;
 
 namespace CiT.Core.Entities.Measures;
 
+/// <inheritdoc />
 public class InstanceReportsMeasuresRequest : MeasuresRequestBase
 {
-    [JsonProperty("instance_reports")] public InstanceDomain? InstanceReports { get; set; }
-    public InstanceReportsMeasuresRequest() { }
+    /// <summary>
+    ///     Constructs an InstanceReportsMeasuresRequest object using the provided domain to set the
+    ///     <see cref="InstanceDomain" />.
+    /// </summary>
+    /// <param name="domain"></param>
     public InstanceReportsMeasuresRequest(string domain)
     {
         Keys = "instance_reports";
@@ -14,4 +18,9 @@ public class InstanceReportsMeasuresRequest : MeasuresRequestBase
             Domain = domain
         };
     }
+    /// <summary>
+    ///     The remote domain for the measures request.
+    /// </summary>
+    [JsonProperty("instance_reports")]
+    public InstanceDomain? InstanceReports { get; set; }
 }

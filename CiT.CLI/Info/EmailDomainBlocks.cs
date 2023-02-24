@@ -2,8 +2,8 @@ namespace CiT.CLI.Info;
 
 public static class EmailDomainBlocks
 {
-	public const string
-		Main = """
+    public const string
+        Main = """
 Shows information about email domain blocks.
 
 Usage:
@@ -22,13 +22,13 @@ remove <domain>
 <command> help
 	show more information about a specific command
 """,
-		Show = """
+        Show = """
 Lists all email domain blocks.
 
 Usage:
 	cit email-domain-blocks show
 """,
-		Query = """
+        Query = """
 Shows information about a specific email domain.
 
 Usage:
@@ -37,7 +37,7 @@ Usage:
 Where:
 	<domain> is a domain on the email domain blocklist.
 """,
-		Add = """
+        Add = """
 Add a domain to the email domain blocklist.
 
 Usage:
@@ -46,7 +46,7 @@ Usage:
 Where:
 	<domain> is the domain to add.
 """,
-		Remove = """
+        Remove = """
 Remove a domain from the email domain blocklist.
 
 Usage:

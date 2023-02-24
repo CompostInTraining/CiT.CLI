@@ -10,16 +10,24 @@ namespace CiT.CLI;
 
 internal static class Program
 {
+    /// <summary>
+    ///     The main program configuration object.
+    /// </summary>
     private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
         .AddJsonFile("clisettings.json", false, true)
         .AddJsonFile($"clisettings.{Environment.GetEnvironmentVariable("CIT_CLI_ENV")}.json", true, true)
         .AddEnvironmentVariables()
         .Build();
+    /// <summary>
+    ///     The main entry point for the application.
+    /// </summary>
+    /// <param name="args">A string array of arguments passed to the program.</param>
+    /// <exception cref="InvalidOperationException"></exception>
     public static void Main(string[] args)
     {
         #region Init Config
 
-        InstanceConfiguration? instanceConfig = Configuration.GetSection("Instance").Get<InstanceConfiguration>();
+        var instanceConfig = Configuration.GetSection("Instance").Get<InstanceConfiguration>();
         IConfigManager configManager =
             new ConfigManager(Configuration, instanceConfig ?? throw new InvalidOperationException());
 
@@ -44,6 +52,7 @@ internal static class Program
             }
             Console.Write("\n");
         }
+        // Separate subcommands
         string[] actionArgs = args.Skip(1).ToArray();
         if (args.Length == 0)
         {
