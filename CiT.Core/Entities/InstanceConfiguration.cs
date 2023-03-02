@@ -1,5 +1,5 @@
+using CiT.Common.Attributes;
 using CiT.Core.Configuration;
-using CiT.Core.Validation;
 
 namespace CiT.Core.Entities;
 
