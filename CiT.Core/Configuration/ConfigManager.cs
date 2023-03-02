@@ -1,7 +1,7 @@
 using System.Configuration;
+using CiT.Common.Exceptions;
+using CiT.Common.Validations;
 using CiT.Core.Entities;
-using CiT.Core.Exceptions;
-using CiT.Core.Validation;
 using Microsoft.Extensions.Configuration;
 
 namespace CiT.Core.Configuration;

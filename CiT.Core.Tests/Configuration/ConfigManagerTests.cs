@@ -1,7 +1,7 @@
 ﻿using System.Configuration;
+using CiT.Common.Exceptions;
 using CiT.Core.Configuration;
 using CiT.Core.Entities;
-using CiT.Core.Exceptions;
 using CiT.Core.Tests.Helpers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
