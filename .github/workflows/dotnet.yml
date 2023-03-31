@@ -8,6 +8,7 @@ on:
 
 permissions:
   checks: write
+  packages: read
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
