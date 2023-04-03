@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
       - name: Restore dependencies
@@ -62,7 +62,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Setup .NET
-        uses: actions/setup-dotnet@v2
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 7.0.x
       - name: Add NuGet source
