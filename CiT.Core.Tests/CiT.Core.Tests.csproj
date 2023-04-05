@@ -4,8 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>disable</ImplicitUsings>
         <Nullable>enable</Nullable>
-
         <IsPackable>false</IsPackable>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
     <ItemGroup>
