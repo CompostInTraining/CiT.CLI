@@ -9,7 +9,6 @@
         <AssemblyName>cit</AssemblyName>
         <RuntimeIdentifiers>osx-x64;linux-x64;win-x64</RuntimeIdentifiers>
         <PublishSingleFile>true</PublishSingleFile>
-        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
