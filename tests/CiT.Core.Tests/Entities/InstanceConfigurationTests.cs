@@ -1,8 +1,4 @@
-﻿using CiT.Core.Entities;
-using CiT.Core.Tests.Helpers;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace CiT.Core.Tests.Entities;
+﻿namespace CiT.Core.Tests.Entities;
 
 [TestClass]
 public class InstanceConfigurationTests

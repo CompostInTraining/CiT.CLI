@@ -1,8 +1,4 @@
 using System.Globalization;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
-using CiT.Core.Extensions;
-using CiT.Core.Mastodon;
 
 namespace CiT.CLI.Commands;
 

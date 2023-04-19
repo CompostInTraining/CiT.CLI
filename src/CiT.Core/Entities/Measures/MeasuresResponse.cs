@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace CiT.Core.Entities.Measures;
 
 /// <summary>

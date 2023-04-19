@@ -1,6 +1,3 @@
-using System.Net.Http.Headers;
-using CiT.Core.Configuration;
-
 namespace CiT.Core.Mastodon;
 
 /// <summary>

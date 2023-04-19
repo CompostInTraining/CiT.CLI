@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace CiT.Core.Entities;
+﻿namespace CiT.Core.Entities;
 
 /// <summary>
 ///     A base object for blocks. Contains common properties.

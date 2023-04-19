@@ -1,9 +1,3 @@
-using System.Text;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
-using CiT.Core.Parsers;
-using Newtonsoft.Json;
-
 namespace CiT.Core.Mastodon;
 
 public class IpAddressBlocksApi : ApiClient
