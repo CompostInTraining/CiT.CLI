@@ -4,7 +4,7 @@
         <OutputType>Exe</OutputType>
         <TargetFramework>net7.0</TargetFramework>
         <RootNamespace>CiT.CLI</RootNamespace>
-        <ImplicitUsings>disable</ImplicitUsings>
+        <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>cit</AssemblyName>
         <RuntimeIdentifiers>osx-x64;linux-x64;win-x64</RuntimeIdentifiers>

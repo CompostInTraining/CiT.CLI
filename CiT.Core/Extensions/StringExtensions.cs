@@ -1,5 +1,3 @@
-using System;
-
 namespace CiT.Core.Extensions;
 
 public static class StringExtensions

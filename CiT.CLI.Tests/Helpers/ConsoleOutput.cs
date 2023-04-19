@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-
 namespace CiT.CLI.Tests.Helpers;
 
 public class ConsoleOutput : IDisposable
