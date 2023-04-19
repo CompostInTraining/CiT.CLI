@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CiT.Core\CiT.Core.csproj" />
+      <ProjectReference Include="..\..\src\CiT.CLI\CiT.CLI.csproj" />
     </ItemGroup>
 
 </Project>
