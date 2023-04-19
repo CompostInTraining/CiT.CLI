@@ -1,10 +1,3 @@
-using CiT.CLI.Commands;
-using CiT.CLI.Tests.Helpers;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Moq;
-
 namespace CiT.CLI.Tests.HelpTests;
 
 [TestClass]

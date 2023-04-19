@@ -1,9 +1,5 @@
-﻿using System;
-using System.Configuration;
-using System.Linq;
+﻿using System.Configuration;
 using CiT.CLI.Commands;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
 using Microsoft.Extensions.Configuration;
 
 namespace CiT.CLI;

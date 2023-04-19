@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
-using CiT.Core.Extensions;
-using CiT.Core.Mastodon;
-
 namespace CiT.CLI.Commands;
 
 /// <summary>

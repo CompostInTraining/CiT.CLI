@@ -1,7 +1,3 @@
-using CiT.Core.Configuration;
-using CiT.Core.Extensions;
-using CiT.Core.Mastodon;
-
 namespace CiT.CLI.Commands;
 
 /// <summary>

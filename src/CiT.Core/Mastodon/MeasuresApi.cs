@@ -1,6 +1,4 @@
-using CiT.Core.Configuration;
 using CiT.Core.Entities.Measures;
-using Newtonsoft.Json;
 
 namespace CiT.Core.Mastodon;
 

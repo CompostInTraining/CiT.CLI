@@ -1,13 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
-using CiT.Core.Configuration;
-using CiT.Core.Entities;
-using CiT.Core.Parsers;
-using Newtonsoft.Json;
-
 namespace CiT.Core.Mastodon;
 
 public class DomainBlocksApi : ApiClient

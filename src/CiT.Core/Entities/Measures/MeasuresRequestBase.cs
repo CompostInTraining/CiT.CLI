@@ -1,7 +1,4 @@
-using System.Net.Http.Headers;
 using System.Net.Mime;
-using System.Text;
-using Newtonsoft.Json;
 
 namespace CiT.Core.Entities.Measures;
 
