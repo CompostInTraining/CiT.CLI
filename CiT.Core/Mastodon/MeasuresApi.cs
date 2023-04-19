@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using CiT.Core.Configuration;
 using CiT.Core.Entities.Measures;
 using Newtonsoft.Json;
