@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.gitignore = .gitignore
+		.github\workflows\dotnet-release.yml = .github\workflows\dotnet-release.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiT.Core.Tests", "tests\CiT.Core.Tests\CiT.Core.Tests.csproj", "{34DD52D1-C934-429F-9441-246588F02EE2}"
