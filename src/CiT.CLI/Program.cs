@@ -1,6 +1,7 @@
 ﻿using System.Configuration;
 using CiT.CLI.Commands;
 using Microsoft.Extensions.Configuration;
+using System.CommandLine;
 
 namespace CiT.CLI;
 
@@ -19,7 +20,7 @@ internal static class Program
     /// </summary>
     /// <param name="args">A string array of arguments passed to the program.</param>
     /// <exception cref="InvalidOperationException"></exception>
-    public static void Main(string[] args)
+    public async static Task Main(string[] args)
     {
         #region Init Config
 
@@ -48,30 +49,47 @@ internal static class Program
             }
             Console.Write("\n");
         }
-        // Separate subcommands
-        string[] actionArgs = args.Skip(1).ToArray();
-        if (args.Length == 0)
+
+        var rootCommand = new RootCommand("Mastodon Administration CLI");
+        var subCommands = new Command[]
         {
-            Console.WriteLine(Info.Program.Main);
-            Environment.Exit(0);
-        }
-        switch (args[0])
+            new DomainBlocks(configManager).GetCommand(),
+            new EmailDomainBlocks(configManager).GetCommand(),
+            new Domains(configManager).GetCommand(),
+            new IpAddressBlocks(configManager).GetCommand()
+        };
+
+        foreach (var command in subCommands)
         {
-            case "domain-blocks":
-                new DomainBlocks(actionArgs, configManager).Process();
-                break;
-            case "domains":
-                new Domains(actionArgs, configManager).Process();
-                break;
-            case "email-domain-blocks":
-                new EmailDomainBlocks(actionArgs, configManager).Process();
-                break;
-            case "ip-blocks":
-                new IpAddressBlocks(actionArgs, configManager).Process();
-                break;
-            default:
-                Console.WriteLine(Info.Program.Main);
-                break;
+            rootCommand.Add(command);
         }
+
+        await rootCommand.InvokeAsync(args);
+
+        // // Separate subcommands
+        // string[] actionArgs =} args.Skip(1).ToArray();
+        // if (args.Length == 0)
+        // {
+        //     Console.WriteLine(Info.Program.Main);
+        //     Environment.Exit(0);
+        // }
+        // switch (args[0])
+        // {
+        //     case "domain-blocks":
+        //         new DomainBlocks(actionArgs, configManager).Process();
+        //         break;
+        //     case "domains":
+        //         new Domains(actionArgs, configManager).Process();
+        //         break;
+        //     case "email-domain-blocks":
+        //         new EmailDomainBlocks(actionArgs, configManager).Process();
+        //         break;
+        //     case "ip-blocks":
+        //         new IpAddressBlocks(actionArgs, configManager).Process();
+        //         break;
+        //     default:
+        //         Console.WriteLine(Info.Program.Main);
+        //         break;
+        // }
     }
 }

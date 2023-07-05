@@ -1,3 +1,5 @@
+using System.CommandLine;
+
 namespace CiT.CLI.Commands;
 
 /// <summary>
@@ -6,91 +8,34 @@ namespace CiT.CLI.Commands;
 public class DomainBlocks
 {
     /// <summary>
-    ///     The current object's action arguments.
-    /// </summary>
-    private readonly string[] _actionArgs;
-    /// <summary>
     ///     The current object's API client.
     /// </summary>
     private readonly DomainBlocksApi _apiClient;
     /// <summary>
     ///     Constructs a DomainBlocks object.
     /// </summary>
-    /// <param name="actionArgs">The arguments for the current action.</param>
     /// <param name="configManager">The ConfigManager.</param>
-    public DomainBlocks(string[] actionArgs, IConfigManager configManager)
+    public DomainBlocks(IConfigManager configManager)
     {
-        _actionArgs = actionArgs;
         _apiClient = new DomainBlocksApi(configManager);
     }
     /// <summary>
     ///     Command to add a domain to the blocklist.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when provided arguments can't be processed.</exception>
-    private void AddCommand()
+    private void AddCommand(string domain, string? severity, string? comment)
     {
-        string[] actionArgs = _actionArgs.Skip(1).ToArray();
-        dynamic actionResult = actionArgs.Length switch
-        {
-            1 => _apiClient.AddDomainBlock(actionArgs[0]),
-            2 => _apiClient.AddDomainBlock(actionArgs[0], actionArgs[1]),
-            3 => _apiClient.AddDomainBlock(actionArgs[0], actionArgs[1], actionArgs[2]),
-            _ => throw new InvalidOperationException()
-        };
+        var actionResult = _apiClient.AddDomainBlock(domain, severity, comment);
         (int statusCode, string response) result = actionResult.Result;
         Console.WriteLine($"Status code: {result.statusCode}\n{result.response}");
     }
     /// <summary>
-    ///     Process subcommand arguments.
-    /// </summary>
-    public void Process()
-    {
-        switch (_actionArgs[0])
-        {
-            case "show":
-                if (_actionArgs[1].IsHelp())
-                {
-                    Console.WriteLine(Info.DomainBlocks.Show);
-                    return;
-                }
-                ShowCommand();
-                break;
-            case "query":
-                if (_actionArgs[1].IsHelp())
-                {
-                    Console.WriteLine(Info.DomainBlocks.Query);
-                    return;
-                }
-                QueryCommand();
-                break;
-            case "add":
-                if (_actionArgs[1].IsHelp())
-                {
-                    Console.WriteLine(Info.DomainBlocks.Add);
-                    return;
-                }
-                AddCommand();
-                break;
-            case "remove":
-                if (_actionArgs[1].IsHelp())
-                {
-                    Console.WriteLine(Info.DomainBlocks.Remove);
-                    return;
-                }
-                RemoveCommand();
-                break;
-            default:
-                Console.WriteLine(Info.DomainBlocks.Main);
-                break;
-        }
-    }
-    /// <summary>
     ///     Command to query the blocklist for a single domain.
     /// </summary>
-    private void QueryCommand()
+    private void QueryCommand(string domain)
     {
         var blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
-        var blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        var blockedDomain = blockedDomains.Find(bd => bd.Domain == domain);
         if (blockedDomain is not null)
         {
             Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
@@ -98,16 +43,16 @@ public class DomainBlocks
         }
         else
         {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+            Console.WriteLine($"Domain \"{domain}\" not found in blocklist.");
         }
     }
     /// <summary>
     ///     Command to remove a domain from the blocklist.
     /// </summary>
-    private void RemoveCommand()
+    private void RemoveCommand(string domain)
     {
         var blockedDomains = _apiClient.GetInstanceBlockedDomains().Result;
-        var blockedDomain = blockedDomains.Find(bd => bd.Domain == _actionArgs[1]);
+        var blockedDomain = blockedDomains.Find(bd => bd.Domain == domain);
         if (blockedDomain is not null)
         {
             Console.WriteLine($"Domain \"{blockedDomain.Domain}\" found in blocklist.");
@@ -117,7 +62,7 @@ public class DomainBlocks
         }
         else
         {
-            Console.WriteLine($"Domain \"{_actionArgs[1]}\" not found in blocklist.");
+            Console.WriteLine($"Domain \"{domain}\" not found in blocklist.");
         }
     }
     /// <summary>
@@ -155,5 +100,46 @@ public class DomainBlocks
             Console.WriteLine(strFormat,
                 bd.Domain, bd.Severity, comment);
         }
+    }
+    public Command GetCommand()
+    {
+        var domainArg = new Argument<string>("domain");
+        var severityArg = new Option<string>(
+            new[] {
+                "-s",
+                "--severity"
+            },
+            description: "should be one of `suspend`, `silence`, or `noop` per the Mastodon docs",
+            getDefaultValue: () => "silence");
+        var commentArg = new Option<string>(
+            new[]
+            {
+                "-c",
+                "--comment"
+            });
+        
+        var command = new Command("domain-blocks");
+        var showCommand = new Command("show");
+        showCommand.SetHandler(ShowCommand);
+
+        var addCommand = new Command("add");
+        addCommand.Add(domainArg);
+        addCommand.Add(severityArg);
+        addCommand.Add(commentArg);
+        addCommand.SetHandler(AddCommand, domainArg, severityArg, commentArg);
+
+        var removeCommand = new Command("remove");
+        removeCommand.Add(domainArg);
+        removeCommand.SetHandler(RemoveCommand, domainArg);
+
+        var queryCommand = new Command("query");
+        queryCommand.Add(domainArg);
+        queryCommand.SetHandler(QueryCommand, domainArg);
+        
+        command.AddCommand(showCommand);
+        command.AddCommand(addCommand);
+        command.AddCommand(queryCommand);
+        command.AddCommand(removeCommand);
+        return command;
     }
 }
