@@ -1,3 +1,5 @@
+using System.CommandLine;
+
 namespace CiT.CLI.Commands;
 
 /// <summary>
@@ -155,5 +157,10 @@ public class DomainBlocks
             Console.WriteLine(strFormat,
                 bd.Domain, bd.Severity, comment);
         }
+    }
+    public Command GetCommand()
+    {
+        var command = new Command("domain-blocks");
+        return command;
     }
 }

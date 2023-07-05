@@ -1,3 +1,4 @@
+using System.CommandLine;
 using System.Globalization;
 
 namespace CiT.CLI.Commands;
@@ -162,5 +163,10 @@ public class IpAddressBlocks
             Console.WriteLine(strFormat,
                 blockedIpAddress.Address, blockedIpAddress.Severity, blockedIpAddress.CreatedAt);
         }
+    }
+    public static Command GetCommand()
+    {
+        var command = new Command("ip-address-blocks");
+        return command;
     }
 }

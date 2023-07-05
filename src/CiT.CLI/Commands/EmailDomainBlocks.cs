@@ -1,3 +1,5 @@
+using System.CommandLine;
+
 namespace CiT.CLI.Commands;
 
 /// <summary>
@@ -144,5 +146,10 @@ public class EmailDomainBlocks
             Console.WriteLine(strFormat,
                 blockedEmailDomain.Domain, blockedEmailDomain.CreatedAt);
         }
+    }
+    public static Command GetCommand()
+    {
+        var command = new Command("email-domain-blocks");
+        return command;
     }
 }

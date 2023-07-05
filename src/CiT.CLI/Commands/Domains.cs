@@ -1,3 +1,5 @@
+using System.CommandLine;
+
 namespace CiT.CLI.Commands;
 
 /// <summary>
@@ -68,5 +70,10 @@ public class Domains
             Console.WriteLine(strFormat,
                 k, v);
         }
+    }
+    public static Command GetCommand()
+    {
+        var command = new Command("domains");
+        return command;
     }
 }
