@@ -54,7 +54,7 @@ internal static class Program
         var subCommands = new Command[]
         {
             new DomainBlocks(configManager).GetCommand(),
-            EmailDomainBlocks.GetCommand(),
+            new EmailDomainBlocks(configManager).GetCommand(),
             new Domains(configManager).GetCommand(),
             IpAddressBlocks.GetCommand()
         };
