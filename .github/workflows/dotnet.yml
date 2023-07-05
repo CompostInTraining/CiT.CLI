@@ -73,4 +73,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: CiT.CLI-${{matrix.rid}}
-          path: src/CiT.CLI/bin/Release/net6.0/${{matrix.rid}}/publish/
+          path: src/CiT.CLI/bin/Release/net7.0/${{matrix.rid}}/publish/
