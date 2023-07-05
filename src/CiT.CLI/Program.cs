@@ -56,7 +56,7 @@ internal static class Program
             new DomainBlocks(configManager).GetCommand(),
             new EmailDomainBlocks(configManager).GetCommand(),
             new Domains(configManager).GetCommand(),
-            IpAddressBlocks.GetCommand()
+            new IpAddressBlocks(configManager).GetCommand()
         };
 
         foreach (var command in subCommands)
