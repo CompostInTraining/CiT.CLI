@@ -55,7 +55,7 @@ internal static class Program
         {
             new DomainBlocks(configManager).GetCommand(),
             EmailDomainBlocks.GetCommand(),
-            Domains.GetCommand(),
+            new Domains(configManager).GetCommand(),
             IpAddressBlocks.GetCommand()
         };
 
