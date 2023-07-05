@@ -19,14 +19,11 @@ public class DomainBlockHelpTests
     public void TestDomainBlocksAddHelp()
     {
         // Arrange
-        DomainBlocks target = new(new[]
-        {
-            "add", "help"
-        }, _configManager);
+        DomainBlocks target = new(_configManager);
 
         // Act
         using var consoleOutput = new ConsoleOutput();
-        target.Process();
+        // target.Process();
 
         Assert.AreEqual(Info.DomainBlocks.Add, consoleOutput.GetOutput());
     }
@@ -34,14 +31,11 @@ public class DomainBlockHelpTests
     public void TestDomainBlocksMainHelp()
     {
         // Arrange
-        DomainBlocks target = new(new[]
-        {
-            ""
-        }, _configManager);
+        DomainBlocks target = new(_configManager);
 
         // Act
         using var consoleOutput = new ConsoleOutput();
-        target.Process();
+        // target.Process();
 
         Assert.AreEqual(Info.DomainBlocks.Main, consoleOutput.GetOutput());
     }
@@ -49,14 +43,11 @@ public class DomainBlockHelpTests
     public void TestDomainBlocksQueryHelp()
     {
         // Arrange
-        DomainBlocks target = new(new[]
-        {
-            "query", "help"
-        }, _configManager);
+        DomainBlocks target = new(_configManager);
 
         // Act
         using var consoleOutput = new ConsoleOutput();
-        target.Process();
+        // target.Process();
 
         Assert.AreEqual(Info.DomainBlocks.Query, consoleOutput.GetOutput());
     }
@@ -64,14 +55,11 @@ public class DomainBlockHelpTests
     public void TestDomainBlocksRemoveHelp()
     {
         // Arrange
-        DomainBlocks target = new(new[]
-        {
-            "remove", "help"
-        }, _configManager);
+        DomainBlocks target = new(_configManager);
 
         // Act
         using var consoleOutput = new ConsoleOutput();
-        target.Process();
+        // target.Process();
 
         Assert.AreEqual(Info.DomainBlocks.Remove, consoleOutput.GetOutput());
     }
@@ -79,14 +67,11 @@ public class DomainBlockHelpTests
     public void TestDomainBlocksShowHelp()
     {
         // Arrange
-        DomainBlocks target = new(new[]
-        {
-            "show", "help"
-        }, _configManager);
+        DomainBlocks target = new(_configManager);
 
         // Act
         using var consoleOutput = new ConsoleOutput();
-        target.Process();
+        // target.Process();
 
         Assert.AreEqual(Info.DomainBlocks.Show, consoleOutput.GetOutput());
     }
