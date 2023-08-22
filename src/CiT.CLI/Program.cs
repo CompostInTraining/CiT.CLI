@@ -51,7 +51,7 @@ internal static class Program
         }
 
         var rootCommand = new RootCommand("Mastodon Administration CLI");
-        var subCommands = new Command[]
+        var subCommands = new[]
         {
             new DomainBlocks(configManager).GetCommand(),
             new EmailDomainBlocks(configManager).GetCommand(),
