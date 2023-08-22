@@ -8,16 +8,17 @@ public abstract class ApiClient
     /// <summary>
     ///     The HttpClient object.
     /// </summary>
-    protected static readonly HttpClient Client = new();
+    protected static HttpClient Client;
     /// <summary>
     ///     ApiClient constructor to initialize the Authorization, Accept, and User-Agent headers.
     /// </summary>
     /// <param name="configManager"></param>
-    protected ApiClient(IConfigManager configManager)
+    protected ApiClient(IConfigManager configManager, HttpClient client)
     {
-        Client.DefaultRequestHeaders.Authorization =
+        client.DefaultRequestHeaders.Authorization =
             new AuthenticationHeaderValue("Bearer", configManager.Instance.AccessToken);
-        Client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-        Client.DefaultRequestHeaders.Add("User-Agent", "CiT-CLI");
+        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        client.DefaultRequestHeaders.Add("User-Agent", "CiT-CLI");
+        Client = client;
     }
 }

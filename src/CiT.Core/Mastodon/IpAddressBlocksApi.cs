@@ -10,7 +10,7 @@ public class IpAddressBlocksApi : ApiClient
     ///     Constructs an IpAddressBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
-    public IpAddressBlocksApi(IConfigManager configManager) : base(configManager)
+    public IpAddressBlocksApi(IConfigManager configManager, HttpClient client) : base(configManager, client)
     {
         _ipAddressBlocksApiUrl = $"{configManager.Instance.Url}/api/v1/admin/ip_blocks";
     }

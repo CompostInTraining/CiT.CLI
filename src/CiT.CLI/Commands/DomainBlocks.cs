@@ -15,9 +15,9 @@ public class DomainBlocks
     ///     Constructs a DomainBlocks object.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
-    public DomainBlocks(IConfigManager configManager)
+    public DomainBlocks(IConfigManager configManager, HttpClient client)
     {
-        _apiClient = new DomainBlocksApi(configManager);
+        _apiClient = new DomainBlocksApi(configManager, client);
     }
     /// <summary>
     ///     Command to add a domain to the blocklist.
