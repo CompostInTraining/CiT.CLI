@@ -15,7 +15,6 @@ public class IpAddressBlocks
     /// <summary>
     ///     Constructs an IpAddressBlocks object.
     /// </summary>
-    /// <param name="actionArgs">The arguments for the current action.</param>
     /// <param name="configManager">The ConfigManager.</param>
     public IpAddressBlocks(IConfigManager configManager)
     {

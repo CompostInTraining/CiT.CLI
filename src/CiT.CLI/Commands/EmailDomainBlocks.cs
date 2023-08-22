@@ -14,7 +14,6 @@ public class EmailDomainBlocks
     /// <summary>
     ///     Constructs an EmailDomainBlocks object.
     /// </summary>
-    /// <param name="actionArgs">The arguments for the current action.</param>
     /// <param name="configManager">The ConfigManager.</param>
     public EmailDomainBlocks(IConfigManager configManager)
     {
