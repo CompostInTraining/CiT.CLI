@@ -24,9 +24,8 @@ internal static class Program
     {
         #region Init Config
 
-        var instanceConfig = Configuration.GetSection("Instance").Get<InstanceConfiguration>();
         IConfigManager configManager =
-            new ConfigManager(Configuration, instanceConfig ?? throw new InvalidOperationException());
+            new ConfigManager(Configuration);
 
         #endregion
 

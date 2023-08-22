@@ -35,11 +35,10 @@ public class ConfigManager : IConfigManager
     /// <param name="instance">The instance configuration.</param>
     /// <exception cref="InvalidConfigurationException">Thrown if any of the provided configurations objects are invalid.</exception>
     public ConfigManager(
-        IConfiguration configuration,
-        InstanceConfiguration instance)
+        IConfiguration configuration)
     {
         Configuration = configuration;
-        Instance = instance;
+        Instance = Configuration.GetSection("Instance").Get<InstanceConfiguration>() ?? throw new InvalidConfigurationException();
 
         if (!Instance.IsValid())
         {
