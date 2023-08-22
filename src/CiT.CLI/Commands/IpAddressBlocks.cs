@@ -15,11 +15,10 @@ public class IpAddressBlocks
     /// <summary>
     ///     Constructs an IpAddressBlocks object.
     /// </summary>
-    /// <param name="actionArgs">The arguments for the current action.</param>
     /// <param name="configManager">The ConfigManager.</param>
-    public IpAddressBlocks(IConfigManager configManager)
+    public IpAddressBlocks(IConfigManager configManager, HttpClient client)
     {
-        _apiClient = new IpAddressBlocksApi(configManager);
+        _apiClient = new IpAddressBlocksApi(configManager, client);
     }
     /// <summary>
     ///     Command to add an IP address to the block/ban list.

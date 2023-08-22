@@ -10,7 +10,7 @@ public class EmailDomainBlocksApi : ApiClient
     ///     Constructs an EmailDomainBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
-    public EmailDomainBlocksApi(IConfigManager configManager) : base(configManager)
+    public EmailDomainBlocksApi(IConfigManager configManager, HttpClient client) : base(configManager, client)
     {
         _emailDomainBlocksApiUrl = $"{configManager.Instance.Url}/api/v1/admin/email_domain_blocks";
     }

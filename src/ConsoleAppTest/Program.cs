@@ -1,5 +1,8 @@
 ﻿using System.CommandLine;
 using ConsoleAppTest.Commands;
+
+namespace ConsoleAppTest;
+
 class Program
 {
     async static Task Main(string[] args)

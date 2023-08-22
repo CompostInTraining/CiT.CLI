@@ -51,12 +51,13 @@ internal static class Program
         }
 
         var rootCommand = new RootCommand("Mastodon Administration CLI");
-        var subCommands = new Command[]
+        var commandClient = new HttpClient();
+        var subCommands = new[]
         {
-            new DomainBlocks(configManager).GetCommand(),
-            new EmailDomainBlocks(configManager).GetCommand(),
-            new Domains(configManager).GetCommand(),
-            new IpAddressBlocks(configManager).GetCommand()
+            new DomainBlocks(configManager, commandClient).GetCommand(),
+            new EmailDomainBlocks(configManager, commandClient).GetCommand(),
+            new Domains(configManager, commandClient).GetCommand(),
+            new IpAddressBlocks(configManager, commandClient).GetCommand()
         };
 
         foreach (var command in subCommands)
@@ -65,31 +66,5 @@ internal static class Program
         }
 
         await rootCommand.InvokeAsync(args);
-
-        // // Separate subcommands
-        // string[] actionArgs =} args.Skip(1).ToArray();
-        // if (args.Length == 0)
-        // {
-        //     Console.WriteLine(Info.Program.Main);
-        //     Environment.Exit(0);
-        // }
-        // switch (args[0])
-        // {
-        //     case "domain-blocks":
-        //         new DomainBlocks(actionArgs, configManager).Process();
-        //         break;
-        //     case "domains":
-        //         new Domains(actionArgs, configManager).Process();
-        //         break;
-        //     case "email-domain-blocks":
-        //         new EmailDomainBlocks(actionArgs, configManager).Process();
-        //         break;
-        //     case "ip-blocks":
-        //         new IpAddressBlocks(actionArgs, configManager).Process();
-        //         break;
-        //     default:
-        //         Console.WriteLine(Info.Program.Main);
-        //         break;
-        // }
     }
 }
