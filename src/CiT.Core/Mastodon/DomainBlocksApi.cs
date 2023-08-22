@@ -69,6 +69,7 @@ public class DomainBlocksApi : ApiClient
             result = await Client.GetAsync(linksFromHeaders.NextLink);
             result.Headers.TryGetValues("Link", out linkHeaders);
             if (linkHeaders != null) linksFromHeaders = LinkHeader.LinksFromHeader(linkHeaders.First());
+            else linksFromHeaders.NextLink = null;
             responseContent = await result.Content.ReadAsStringAsync();
             obj = JsonConvert.DeserializeObject<List<BlockedDomain>>(responseContent);
             if (obj != null) rtnObj.AddRange(obj);
