@@ -10,7 +10,7 @@ public class DomainBlocksApi : ApiClient
     ///     Constructs a DomainBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
-    public DomainBlocksApi(IConfigManager configManager) : base(configManager)
+    public DomainBlocksApi(IConfigManager configManager, HttpClient client) : base(configManager, client)
     {
         _domainBlocksApiUrl = $"{configManager.Instance.Url}/api/v1/admin/domain_blocks";
     }

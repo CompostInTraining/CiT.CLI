@@ -51,12 +51,13 @@ internal static class Program
         }
 
         var rootCommand = new RootCommand("Mastodon Administration CLI");
+        var commandClient = new HttpClient();
         var subCommands = new[]
         {
-            new DomainBlocks(configManager).GetCommand(),
-            new EmailDomainBlocks(configManager).GetCommand(),
-            new Domains(configManager).GetCommand(),
-            new IpAddressBlocks(configManager).GetCommand()
+            new DomainBlocks(configManager, commandClient).GetCommand(),
+            new EmailDomainBlocks(configManager, commandClient).GetCommand(),
+            new Domains(configManager, commandClient).GetCommand(),
+            new IpAddressBlocks(configManager, commandClient).GetCommand()
         };
 
         foreach (var command in subCommands)
