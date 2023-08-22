@@ -11,18 +11,22 @@ namespace CiT.Core.Tests.Configuration;
 public class ConfigManagerTests
 {
     private IConfigManager _configManager;
-    private Mock<IConfiguration> _config;
     private InstanceConfiguration _instanceConfiguration;
     [TestInitialize]
     public void Init() {
-        _config = new Mock<IConfiguration>();
-        _instanceConfiguration = new InstanceConfiguration()
+        var config = new Dictionary<string, string?>
         {
-            Url = "https://mastodon.example.com",
-            AccessToken = RandomString.New()
+            {
+                "Instance:Url", "https://mastodon.example.com"
+            },
+            {
+                "Instance:AccessToken", RandomString.New()
+            }
         };
-        _configManager = new ConfigManager(
-            _config.Object, _instanceConfiguration);
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(config)
+            .Build();
+        _configManager = new ConfigManager(configuration);
     }
     [TestMethod]
     public void ConfigManager_HasProperties() {
@@ -33,21 +37,16 @@ public class ConfigManagerTests
     [TestMethod]
     public void GetConfigValue_Success() {
         // Arrange
-        var expected = "ExpectedConfig";
-
-        _config.SetupGet(x => x[It.IsAny<string>()]).Returns(expected);
 
         // Act
-        var actual = _configManager.GetConfigValue("ValidName");
+        var actual = _configManager.GetConfigValue("Instance:Url");
 
         // Assert
-        Assert.AreEqual(expected, actual);
+        Assert.AreEqual("https://mastodon.example.com", actual);
     }
     [TestMethod]
     [ExpectedException(typeof(ConfigurationErrorsException))]
     public void GetConfigValue_Throws_ConfigurationErrorsException() {
-        // Arrange
-        _config.SetupGet(x => x[It.IsAny<string>()]).Returns("");
 
         // Act
         _configManager.GetConfigValue("InvalidName");
@@ -58,9 +57,15 @@ public class ConfigManagerTests
     [ExpectedException(typeof(InvalidConfigurationException))]
     public void InvalidConfigurationInitialization_Throws_InvalidConfigurationException()
     {
-        _config = new Mock<IConfiguration>();
-        _instanceConfiguration = new InstanceConfiguration();
-        _configManager = new ConfigManager(
-            _config.Object, _instanceConfiguration);
+        var config = new Dictionary<string, string?>
+        {
+            {
+                "Instance", null
+            }
+        };
+        var configuration = new ConfigurationBuilder()
+            .AddInMemoryCollection(config)
+            .Build();
+        _configManager = new ConfigManager(configuration);
     }
 }
