@@ -1,3 +1,7 @@
+[![.NET](https://github.com/CompostInTraining/CiT.CLI/actions/workflows/dotnet.yml/badge.svg)](https://github.com/CompostInTraining/CiT.CLI/actions/workflows/dotnet.yml)
+[![.NET Release](https://github.com/CompostInTraining/CiT.CLI/actions/workflows/dotnet-release.yml/badge.svg)](https://github.com/CompostInTraining/CiT.CLI/actions/workflows/dotnet-release.yml)
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/CompostInTraining/CiT.CLI?include_prereleases)](https://github.com/CompostInTraining/CiT.CLI/releases/latest)
+
 # CiT.CLI
 
 A CLI for administering the CompostInTraining.club Mastodon instance.
