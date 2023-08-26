@@ -5,6 +5,7 @@
 
 # Secrets
 clisettings*.json
+clisettings*.xml
 
 # User-specific files
 *.rsuser
