@@ -20,6 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{98A888F6
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleAppTest", "src\ConsoleAppTest\ConsoleAppTest.csproj", "{DD57DA39-C0C7-4C04-A0F9-51514FD4A263}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{8FDCF70A-6C79-42D5-9483-832761ACCE68}"
+	ProjectSection(SolutionItems) = preProject
+		schemas\clisettings.xsd = schemas\clisettings.xsd
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -48,5 +53,6 @@ Global
 		{94CAC06C-074B-4021-A166-B115608506A8} = {F7F2331B-A278-45A7-9DA2-BEA14798F478}
 		{34DD52D1-C934-429F-9441-246588F02EE2} = {98A888F6-D1AD-44B5-91C0-389D0337043D}
 		{DD57DA39-C0C7-4C04-A0F9-51514FD4A263} = {F7F2331B-A278-45A7-9DA2-BEA14798F478}
+		{8FDCF70A-6C79-42D5-9483-832761ACCE68} = {D9E8646D-644B-4A63-AB0F-7E22ED06FB8D}
 	EndGlobalSection
 EndGlobal

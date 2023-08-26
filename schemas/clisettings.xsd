@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar ns="CiT-CLI"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="root">
+      <attribute name="xsi:schemaLocation">
+        <data type="anyURI"/>
+      </attribute>
+      <element name="Instance">
+        <a:documentation>
+          Mastodon instance configuration settings
+        </a:documentation>
+        <element name="Url">
+          <a:documentation>
+            The base URL of the Mastodon instance you intend to administer.
+          </a:documentation>
+          <data type="anyURI"/>
+        </element>
+        <element name="AccessToken">
+          <a:documentation>
+            The Access Token for Mastodon API access.
+          </a:documentation>
+          <text/>
+        </element>
+      </element>
+    </element>
+  </start>
+</grammar>
