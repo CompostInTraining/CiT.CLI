@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns="CiT-CLI"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="CiT-CLI">
+  <Instance>
+    <Url></Url>
+    <AccessToken></AccessToken>
+  </Instance>
+</root>
