@@ -15,6 +15,7 @@ public class Domains
     ///     Constructs a Domains object.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
+    /// <param name="client">The HttpClient.</param>
     public Domains(IConfigManager configManager, HttpClient client)
     {
         _apiClient = new MeasuresApi(configManager, client);

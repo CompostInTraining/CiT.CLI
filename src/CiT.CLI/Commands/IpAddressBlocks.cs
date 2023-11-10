@@ -16,6 +16,7 @@ public class IpAddressBlocks
     ///     Constructs an IpAddressBlocks object.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
+    /// <param name="client">The HttpClient.</param>
     public IpAddressBlocks(IConfigManager configManager, HttpClient client)
     {
         _apiClient = new IpAddressBlocksApi(configManager, client);
