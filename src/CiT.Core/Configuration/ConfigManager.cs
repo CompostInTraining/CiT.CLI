@@ -32,7 +32,6 @@ public class ConfigManager : IConfigManager
     ///     Constructs a ConfigManager with all Configuration objects.
     /// </summary>
     /// <param name="configuration">The main program Configuration</param>
-    /// <param name="instance">The instance configuration.</param>
     /// <exception cref="InvalidConfigurationException">Thrown if any of the provided configurations objects are invalid.</exception>
     public ConfigManager(
         IConfiguration configuration)

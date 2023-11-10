@@ -15,6 +15,7 @@ public class EmailDomainBlocks
     ///     Constructs an EmailDomainBlocks object.
     /// </summary>
     /// <param name="configManager">The ConfigManager.</param>
+    /// <param name="client">The HttpClient.</param>
     public EmailDomainBlocks(IConfigManager configManager, HttpClient client)
     {
         _apiClient = new EmailDomainBlocksApi(configManager, client);

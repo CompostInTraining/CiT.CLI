@@ -12,7 +12,8 @@ public abstract class ApiClient
     /// <summary>
     ///     ApiClient constructor to initialize the Authorization, Accept, and User-Agent headers.
     /// </summary>
-    /// <param name="configManager"></param>
+    /// <param name="configManager">The config manager.</param>
+    /// <param name="client">The HttpClient.</param>
     protected ApiClient(IConfigManager configManager, HttpClient client)
     {
         client.DefaultRequestHeaders.Authorization =
