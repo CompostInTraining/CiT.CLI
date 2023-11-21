@@ -7,9 +7,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{D9E8646D-644B-4A63-AB0F-7E22ED06FB8D}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
-		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
 		.gitignore = .gitignore
-		.github\workflows\dotnet-release.yml = .github\workflows\dotnet-release.yml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CiT.Core.Tests", "tests\CiT.Core.Tests\CiT.Core.Tests.csproj", "{34DD52D1-C934-429F-9441-246588F02EE2}"
@@ -23,6 +21,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Schemas", "Schemas", "{8FDCF70A-6C79-42D5-9483-832761ACCE68}"
 	ProjectSection(SolutionItems) = preProject
 		schemas\clisettings.xsd = schemas\clisettings.xsd
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CI Workflows", "CI Workflows", "{39E2AAEB-EF60-4B21-B3B2-2167F04C3EE7}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+		.github\workflows\dotnet-release.yml = .github\workflows\dotnet-release.yml
 	EndProjectSection
 EndProject
 Global
@@ -54,5 +58,6 @@ Global
 		{34DD52D1-C934-429F-9441-246588F02EE2} = {98A888F6-D1AD-44B5-91C0-389D0337043D}
 		{DD57DA39-C0C7-4C04-A0F9-51514FD4A263} = {F7F2331B-A278-45A7-9DA2-BEA14798F478}
 		{8FDCF70A-6C79-42D5-9483-832761ACCE68} = {D9E8646D-644B-4A63-AB0F-7E22ED06FB8D}
+		{39E2AAEB-EF60-4B21-B3B2-2167F04C3EE7} = {D9E8646D-644B-4A63-AB0F-7E22ED06FB8D}
 	EndGlobalSection
 EndGlobal
