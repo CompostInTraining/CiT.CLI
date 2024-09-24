@@ -28,7 +28,7 @@
       </PackageReference>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
-      <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="8.0.0" />
+      <PackageReference Include="NetEscapades.Configuration.Yaml" Version="3.1.0" />
       <PackageReference Include="System.CommandLine" Version="2.0.0-beta4.22272.1" />
     </ItemGroup>
 
@@ -37,13 +37,13 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="clisettings.xml.example">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <None Update="clisettings.xml">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
       <None Update="clisettings.LocalTest.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="clisettings.yaml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="clisettings.yaml.example">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
