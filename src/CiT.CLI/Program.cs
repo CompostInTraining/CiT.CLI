@@ -11,8 +11,8 @@ internal static class Program
     ///     The main program configuration object.
     /// </summary>
     private static IConfiguration Configuration { get; } = new ConfigurationBuilder()
-        .AddXmlFile("clisettings.xml", false, true)
-        .AddXmlFile($"clisettings.{Environment.GetEnvironmentVariable("CIT_CLI_ENV")}.xml", true, true)
+        .AddYamlFile("clisettings.yaml", false, true)
+        .AddYamlFile($"clisettings.{Environment.GetEnvironmentVariable("CIT_CLI_ENV")}.yaml", true, true)
         .AddEnvironmentVariables()
         .Build();
     /// <summary>
