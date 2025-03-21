@@ -5,7 +5,7 @@ public class DomainBlocksApi : ApiClient
     /// <summary>
     ///     The Mastodon domain blocks API URL.
     /// </summary>
-    private static string? _domainBlocksApiUrl;
+    private readonly string? _domainBlocksApiUrl;
     /// <summary>
     ///     Constructs a DomainBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>

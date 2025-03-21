@@ -8,7 +8,7 @@ public abstract class ApiClient
     /// <summary>
     ///     The HttpClient object.
     /// </summary>
-    protected static HttpClient Client;
+    protected readonly HttpClient Client;
     /// <summary>
     ///     ApiClient constructor to initialize the Authorization, Accept, and User-Agent headers.
     /// </summary>
