@@ -54,7 +54,6 @@ public class ConfigManagerTests
         // Assert - Exception
     }
     [TestMethod]
-    [ExpectedException(typeof(InvalidConfigurationException))]
     public void InvalidConfigurationInitialization_Throws_InvalidConfigurationException()
     {
         var config = new Dictionary<string, string?>
@@ -66,6 +65,6 @@ public class ConfigManagerTests
         var configuration = new ConfigurationBuilder()
             .AddInMemoryCollection(config)
             .Build();
-        _configManager = new ConfigManager(configuration);
+        Assert.ThrowsException<InvalidConfigurationException>(() => new ConfigManager(configuration));
     }
 }
