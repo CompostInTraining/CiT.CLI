@@ -5,7 +5,7 @@ public class IpAddressBlocksApi : ApiClient
     /// <summary>
     ///     The Mastodon IP address blocks API URL.
     /// </summary>
-    private static string? _ipAddressBlocksApiUrl;
+    private readonly string? _ipAddressBlocksApiUrl;
     /// <summary>
     ///     Constructs an IpAddressBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>

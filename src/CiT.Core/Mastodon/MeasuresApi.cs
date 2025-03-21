@@ -7,7 +7,7 @@ public class MeasuresApi : ApiClient
     /// <summary>
     ///     The Mastodon measures API URL.
     /// </summary>
-    private static string? _measuresApiUrl;
+    private readonly string? _measuresApiUrl;
     /// <summary>
     ///     Constructs a MeasuresApi object using the ConfigManager to set the API URL.
     /// </summary>

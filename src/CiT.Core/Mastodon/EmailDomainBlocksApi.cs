@@ -5,7 +5,7 @@ public class EmailDomainBlocksApi : ApiClient
     /// <summary>
     ///     The Mastodon email blocks API URL.
     /// </summary>
-    private static string? _emailDomainBlocksApiUrl;
+    private readonly string? _emailDomainBlocksApiUrl;
     /// <summary>
     ///     Constructs an EmailDomainBlocksApi object using the ConfigManager to set the API URL.
     /// </summary>
