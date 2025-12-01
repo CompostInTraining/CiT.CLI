@@ -69,7 +69,7 @@ jobs:
       - name: Publish CLI (${{matrix.rid}}
         run: dotnet publish src/CiT.CLI/CiT.CLI.csproj -c Release -r ${{matrix.rid}} --self-contained
       - name: Upload CLI artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: CiT.CLI-${{matrix.rid}}
           path: src/CiT.CLI/bin/Release/net7.0/${{matrix.rid}}/publish/
